@@ -20,7 +20,7 @@
     <string name="title_activity_login">Connexion</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Identifiant</string>
+    <string name="prompt_login">Identifiant</string>
     <string name="prompt_password">Mot de passe</string>
     <string name="action_sign_in_short">Connexion</string>
     <string name="error_incorrect_login">Cet identifiant n\'existe pas</string>
