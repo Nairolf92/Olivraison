@@ -4,12 +4,13 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurations</string>
 
 
     <string name="Ajouter_livreur">Ajouter un Livreur</string>
     <string name="Liste_livreur">Liste des Livreurs</string>
 
+    <string name="Liste_commandes_cours">Livraison en cours </string>
     <string name="Liste_commandes">Liste des commandes </string>
     <string name="Ajouter_commande">Ajouter une commande</string>
 
@@ -31,5 +32,7 @@
         completions."
     </string>
     <string name="title_activity_admin">Admin</string>
-    <string name="title_activity_index">Index</string>
+    <string name="title_activity_index">Admin - Commandes</string>
+
+    <string name="action_add">+</string>
 </resources>

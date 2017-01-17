@@ -75,6 +75,8 @@ public class Index extends AppCompatActivity
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
+
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
