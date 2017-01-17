@@ -26,6 +26,10 @@
         <activity
             android:name=".Index"
             android:label="@string/title_activity_index"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".indexLivreur"
+            android:label="@string/title_activity_index_livreur"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -35,4 +35,5 @@
     <string name="title_activity_index">Admin - Commandes</string>
 
     <string name="action_add">+</string>
+    <string name="title_activity_index_livreur">Mes Livraisons</string>
 </resources>
