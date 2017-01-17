@@ -32,7 +32,7 @@
         completions."
     </string>
     <string name="title_activity_admin">Admin</string>
-    <string name="title_activity_index">Admin - Commandes</string>
+    <string name="title_activity_index">Commandes en cours</string>
 
     <string name="action_add">+</string>
     <string name="title_activity_index_livreur">Mes Livraisons</string>
