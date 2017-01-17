@@ -13,4 +13,10 @@
     tools:context="projet.olivraison.Index"
     tools:showIn="@layout/app_bar_index">
 
+
+    <ListView
+        android:id="@+id/listViewCommandeCours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

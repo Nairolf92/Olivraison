@@ -12,9 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.*;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class Index extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class Index extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    // creation de liste des commande en cours
+    ListView listCommandeCours;
+    String[] commandes = new String[]{
+            "Commande 1: Patte plus", "Commande 2: pidzza Poulet", "Commande 3: pidzza curie", "Commande 4: pidzza 360", "Commande 5: pidzza Viande",
+            "Commande 6 :pidzza porc", "Commande 7: pidzza dinde", "Commande 8: pidzza royale", "Commande 9: pidzza elegance", "Commande 10: pidzza premium"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +32,18 @@ public class Index extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        listCommandeCours = (ListView) findViewById(R.id.listViewCommandeCours);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Index.this,
+                android.R.layout.simple_list_item_1, commandes);
+        listCommandeCours.setAdapter(adapter);
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Activiter d'ajout de commande a creer", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

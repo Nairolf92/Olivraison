@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Commandes">
+    <item android:title="single">
 
         <item
             android:id="@+id/nav_livraison_cours"
@@ -23,12 +23,12 @@
         <item
             android:id="@+id/nav_liste_livreur"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/Liste_commandes_cours" />
+            android:title="Liste des livreurs" />
 
         <item
             android:id="@+id/nav_ajout_livreur"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/Ajouter_commande" />
+            android:title="Ajouter un livreur" />
         </menu>
     </item>
 
