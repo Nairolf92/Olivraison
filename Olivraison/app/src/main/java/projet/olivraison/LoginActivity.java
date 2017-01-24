@@ -18,6 +18,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -37,13 +52,19 @@ public class LoginActivity extends AppCompatActivity {
 
     // UI references.
     private TextView mLoginView;
+    private TextView mTestView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private RequestQueue requestQueue;
+    private String jsonResponse;
+    private ArrayList<String> users = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mLoginView = (TextView) findViewById(R.id.login);
@@ -70,6 +91,47 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
+        mTestView = (TextView) findViewById(R.id.test);
+        requestQueue = Volley.newRequestQueue(this);
+        String url = "http://jsonplaceholder.typicode.com/users";
+        JsonArrayRequest jsonArray = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            // Parsing json array response
+                            // loop through each json object
+                            jsonResponse = "";
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject person = (JSONObject) response
+                                        .get(i);
+
+                                String name = person.getString("name");
+                                String username = person.getString("username");
+
+                                jsonResponse = username + ":"+username;
+                                users.add(jsonResponse);
+
+                            }
+                            mTestView.setText(Arrays.toString(users.toArray()));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.i("test", error.getMessage());
+
+                    }
+                });
+        Volley.newRequestQueue(this).add(jsonArray);
     }
 
     /**
@@ -94,8 +156,14 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_empty_password));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -122,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 3;
     }
 
     /**
@@ -178,22 +246,22 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-//            try {
-//                // Simulate network access.
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                return false;
-//            }
+/*            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                return false;
+            }*/
 
-            for (String credential : DUMMY_CREDENTIALS) {
+            for (String credential : users) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
+                }else{
+                    return false;
                 }
             }
-
-            // TODO: register the new account here.
             return true;
         }
 
@@ -203,7 +271,7 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                Intent intent = new Intent(LoginActivity.this, indexLivreur.class);
+                Intent intent = new Intent(LoginActivity.this, Index.class);
                 startActivity(intent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
