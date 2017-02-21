@@ -30,7 +30,16 @@
         <activity
             android:name=".indexLivreur"
             android:label="@string/title_activity_index_livreur"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".detailsCommandeCours"
+            android:label="@string/title_activity_details_commande_cours"
+            android:parentActivityName=".Index"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="projet.olivraison.Index" />
+        </activity>
     </application>
 
 </manifest>

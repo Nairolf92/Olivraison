@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String jsonResponse;
     private ArrayList<String> users = new ArrayList<String>();
+    private String status;
 
 
     @Override
@@ -112,11 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                                 String name = person.getString("name");
                                 String username = person.getString("username");
 
-                                jsonResponse = username + ":"+username;
+                                jsonResponse = username + ":"+username + ":" + name;
                                 users.add(jsonResponse);
 
                             }
-                            mTestView.setText(Arrays.toString(users.toArray()));
+                           // mTestView.setText(Arrays.toString(users.toArray()));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -255,8 +256,9 @@ public class LoginActivity extends AppCompatActivity {
 
             for (String credential : users) {
                 String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
+                    if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
+                        status = pieces[2];
                     return pieces[1].equals(mPassword);
                 }else{
                     return false;
@@ -272,6 +274,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, Index.class);
+                intent.putExtra("status",status);
                 startActivity(intent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Configurations</string>
+    <string name="action_settings">Déconnexion</string>
 
 
     <string name="Ajouter_livreur">Ajouter un Livreur</string>
@@ -37,4 +37,5 @@
 
     <string name="action_add">+</string>
     <string name="title_activity_index_livreur">Mes Livraisons</string>
+    <string name="title_activity_details_commande_cours">details Commande</string>
 </resources>
