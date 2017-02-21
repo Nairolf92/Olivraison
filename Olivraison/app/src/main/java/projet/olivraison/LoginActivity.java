@@ -1,9 +1,12 @@
+
 package projet.olivraison;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 
@@ -45,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "admin:admin", "livreur:livreur"
     };
+   
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -59,7 +63,12 @@ public class LoginActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String jsonResponse;
     private ArrayList<String> users = new ArrayList<String>();
+    private String id;
+    private String fullname;
+    private static final String PREFS_NAME = "";
+    // 1 = admin et 0 = livreur
     private String status;
+    
 
 
     @Override
@@ -112,12 +121,13 @@ public class LoginActivity extends AppCompatActivity {
 
                                 String name = person.getString("name");
                                 String username = person.getString("username");
+                                String id_role = person.getString("id");
 
-                                jsonResponse = username + ":"+username + ":" + name;
+                                jsonResponse = username + ":"+username + ":" + id_role;
                                 users.add(jsonResponse);
 
                             }
-                           // mTestView.setText(Arrays.toString(users.toArray()));
+                            mTestView.setText(Arrays.toString(users.toArray()));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -229,6 +239,7 @@ public class LoginActivity extends AppCompatActivity {
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -256,13 +267,17 @@ public class LoginActivity extends AppCompatActivity {
 
             for (String credential : users) {
                 String[] pieces = credential.split(":");
+                Log.i("pieces0",pieces[0]);
+                Log.i("pieces1",pieces[1]);
+                Log.i("pieces2", pieces[2]);
                     if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
+                        // Account exists, return true if the password matches.
+                        // On récupère le statut de la personne pour plus tard
                         status = pieces[2];
-                    return pieces[1].equals(mPassword);
-                }else{
-                    return false;
-                }
+                        // On récupère le prénom + nom de la personne pour plus tard
+                        fullname = pieces[0] + " " + pieces[1];
+                        return pieces[1].equals(mPassword);
+                    }
             }
             return true;
         }
@@ -273,9 +288,20 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                Intent intent = new Intent(LoginActivity.this, Index.class);
-                intent.putExtra("status",status);
-                startActivity(intent);
+                Log.i("status",status);
+
+                if (status.equals("1")) {
+                    Log.i("admin","ok");
+                    Intent intent = new Intent(LoginActivity.this, Index.class);
+                    intent.putExtra("status",status);
+                    intent.putExtra("fullname",fullname);
+                    startActivity(intent);
+                }else if(status.equals("2")){
+                    Intent intent = new Intent(LoginActivity.this, indexLivreur.class);
+                    intent.putExtra("status",status);
+                    intent.putExtra("fullname",fullname);
+                    startActivity(intent);
+                }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -289,4 +315,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }
+
 

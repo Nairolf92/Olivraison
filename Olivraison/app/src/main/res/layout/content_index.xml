@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,10 +14,10 @@
     tools:context="projet.olivraison.Index"
     tools:showIn="@layout/app_bar_index">
 
-
     <ListView
         android:id="@+id/listViewCommandeCours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>
+
