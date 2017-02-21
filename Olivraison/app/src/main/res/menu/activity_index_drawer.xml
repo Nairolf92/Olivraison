@@ -19,7 +19,7 @@
     </item>
 
     <item android:title="Livreurs">
-        <menu> 
+        <menu>
         <item
             android:id="@+id/nav_liste_livreur"
             android:icon="@drawable/ic_menu_slideshow"
