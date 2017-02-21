@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -41,13 +42,9 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
     private ListView listCommandeCoursView;
     private RequestQueue requestQueue;
     private String jsonResponse;
-    private ArrayList<String> commandeCours = new ArrayList<String>(); 
-
-
-
-
-
-
+    private ArrayList<String> commandeCours = new ArrayList<String>();
+    private TextView mFullName;
+    private Menu menu;
 
 
     //String[] commandes = new String[]{
@@ -63,8 +60,24 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Récupération des extras
+        Bundle extras = getIntent().getExtras();
+        String fullname;
+        String status;
+        if (extras != null) {
+            // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur)
+            fullname = extras.getString("fullname");
+            Log.i("fullname",fullname);
+            //MenuItem bedMenuItem = menu.findItem(R.id.fullname);
+            //bedMenuItem.setTitle(fullname);
+            status = extras.getString("status");
+            //mFullName = (TextView) findViewById(R.id.fullname);
+            //mFullName.setText("fullname");
+        }
 
-        //recuperation de la vue qui affiche les donnees de l'API
+
+
+            //recuperation de la vue qui affiche les donnees de l'API
         listCommandeCoursView = (ListView) findViewById(R.id.listViewCommandeCours);
         final String name = null;
 

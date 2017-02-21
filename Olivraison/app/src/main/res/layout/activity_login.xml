@@ -10,11 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="projet.olivraison.LoginActivity">
 
-<TextView
-    android:layout_width="300dp"
-    android:layout_height="100dp"
-    android:id="@+id/test"
-    />
 
     <ImageView
         android:layout_width="wrap_content"
