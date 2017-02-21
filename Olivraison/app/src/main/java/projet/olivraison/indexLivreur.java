@@ -117,7 +117,7 @@ public class indexLivreur extends AppCompatActivity {
                     }
                 });
         Volley.newRequestQueue(this).add(jsonArray);
-
+/*
 
         //l'action qui se passe lorsque je clique sur un element de la liste des commande
         listCommandesLivreurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -131,12 +131,14 @@ public class indexLivreur extends AppCompatActivity {
                 //quand je clique sur un element, j'affiche la vue details pour afficher les details de la commande
                 Intent i = new Intent (getApplicationContext(), detailsCommandeCours.class);
                 ArrayList<String> ArrayCommande = Index.this.commandeCours;
-                
+
                 i.putExtra("position",ArrayCommande.get(position) );
                 i.putExtra("name",ArrayCommande.set(2,name) );
                 startActivity(i);
             }
         });
+
+        */
 
 
 
