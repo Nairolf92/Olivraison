@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -42,12 +43,8 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
     private RequestQueue requestQueue;
     private String jsonResponse;
     private ArrayList<String> commandeCours = new ArrayList<String>();
-
-
-
-
-
-
+    private TextView mFullName;
+    private Menu menu;
 
 
     //String[] commandes = new String[]{
@@ -63,8 +60,19 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Récupération des extras
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur)
+            String fullname = extras.getString("fullname");
+            String status = extras.getString("status");
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            View headerView = navigationView.getHeaderView(0);
+            TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
+            navUsername.setText(fullname);
+        }
 
-        //recuperation de la vue qui affiche les donnees de l'API
+            //recuperation de la vue qui affiche les donnees de l'API
         listCommandeCoursView = (ListView) findViewById(R.id.listViewCommandeCours);
         final String name = null;
 
@@ -171,12 +179,12 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         }
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.index, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.login_progress);
 
 
-        mTestView = (TextView) findViewById(R.id.test);
+        //mTestView = (TextView) findViewById(R.id.test);
         requestQueue = Volley.newRequestQueue(this);
         String url = "http://jsonplaceholder.typicode.com/users";
         JsonArrayRequest jsonArray = new JsonArrayRequest
@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                                 users.add(jsonResponse);
 
                             }
-                            mTestView.setText(Arrays.toString(users.toArray()));
+                            //mTestView.setText(Arrays.toString(users.toArray()));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

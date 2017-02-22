@@ -19,7 +19,7 @@
     </item>
 
     <item android:title="Livreurs">
-        <menu> 
+        <menu>
         <item
             android:id="@+id/nav_liste_livreur"
             android:icon="@drawable/ic_menu_slideshow"
@@ -32,12 +32,12 @@
         </menu>
     </item>
 
-    <item android:title="Profile">
+    <item android:title="Paramètres">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/deconnexion"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="@string/Set_Setting" />
+                android:title="Déconnexion" />
 
         </menu>
     </item>
