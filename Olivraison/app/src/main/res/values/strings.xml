@@ -1,4 +1,3 @@
-
 <resources>
     <string name="app_name">O\'Livraison</string>
 
@@ -39,5 +38,7 @@
     <string name="action_add">+</string>
     <string name="title_activity_index_livreur">Mes Livraisons</string>
     <string name="title_activity_details_commande_cours">details Commande</string>
+    <string name="title_activity_detail_commande_livreur">detailCommandeLivreur</string>
+    <string name="title_activity_livreur_maps">Map</string>
 </resources>
 
