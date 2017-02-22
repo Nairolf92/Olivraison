@@ -60,7 +60,7 @@ public class indexLivreur extends AppCompatActivity {
         setContentView(R.layout.activity_index_livreur);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,10 +69,12 @@ public class indexLivreur extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        */
 
 
         requestQueue = Volley.newRequestQueue(this);
         String url = "https://jsonplaceholder.typicode.com/users";
+        listCommandesLivreurs = (ListView) findViewById(R.id.listViewCommandesLivreurs);
 
         JsonArrayRequest jsonArray = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -96,7 +98,7 @@ public class indexLivreur extends AppCompatActivity {
 
                             }
 
-                            listCommandesLivreurs = (ListView) findViewById(R.id.listViewCommandesLivreurs);
+
 
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(indexLivreur.this,
                                     android.R.layout.simple_list_item_1, ArrayCommande);
@@ -118,43 +120,36 @@ public class indexLivreur extends AppCompatActivity {
                     }
                 });
         Volley.newRequestQueue(this).add(jsonArray);
-/*
 
-        //l'action qui se passe lorsque je clique sur un element de la liste des commande
+
+
+
         listCommandesLivreurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
 
-                //quand je clique sur un element, j'affiche la vue details pour afficher les details de la commande
-                Intent i = new Intent (getApplicationContext(), detailsCommandeCours.class);
-                ArrayList<String> ArrayCommande = Index.this.commandeCours;
 
+                Intent i = new Intent (getApplicationContext(), detailCommandeLivreur.class);
+                ArrayList<String> ArrayCommande = indexLivreur.this.ArrayCommande;
                 i.putExtra("position",ArrayCommande.get(position) );
-                i.putExtra("name",ArrayCommande.set(2,name) );
+                //i.putExtra("name",ArrayCommande.set(2,name) );
                 startActivity(i);
+
             }
         });
 
+        /*
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         */
-
-
-
-
-/*
-        listCommandesLivreurs = (ListView) findViewById(R.id.listViewCommandesLivreurs);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(indexLivreur.this,
-                android.R.layout.simple_list_item_1, ArrayCommande);
-
-        listCommandesLivreurs.setAdapter(adapter);
-        */
-
     }
-
 
 }
 
