@@ -1,6 +1,8 @@
 package projet.olivraison;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,14 +65,19 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
             String fullname = extras.getString("fullname");
             String id_role = extras.getString("id_role");
             String id_p = extras.getString("id_p");
+            // Menu
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
             View headerView = navigationView.getHeaderView(0);
+            // Mise en place de l'icone admin dans le menu
+            ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
+            image_role.setImageResource(R.drawable.ic_admin);
+            // Mise en place du nom + prénom de la personne dans le menu
             TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
             navUsername.setText(fullname);
         }
 
-            //recuperation de la vue qui affiche les donnees de l'API
+        //recuperation de la vue qui affiche les donnees de l'API
         listCommandeCoursView = (ListView) findViewById(R.id.listViewCommandeCours);
         final String name = null;
 
