@@ -2,8 +2,10 @@ package projet.olivraison;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,10 +15,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static projet.olivraison.R.id.fab;
 
 public class detailCommandeLivreur extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private RequestQueue requestQueue;
+    private String jsonResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +51,23 @@ public class detailCommandeLivreur extends AppCompatActivity
         Intent intent = getIntent();
 
         String position = intent.getStringExtra("position");
-        textCommandeLivreur.setText(position);
+
+        long id = 0;
+        id = intent.getLongExtra("id", id);
+
+        //textCommandeLivreur.setText(position);
+
+        Button monBouton = (Button) findViewById(R.id.button);
+        monBouton.setText("prendre la commande : "+ id);
+
+        monBouton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                //Toast.makeText(getApplicationContext(), "bouton clicker", Toast.LENGTH_LONG).show();
+                Intent i = new Intent (getApplicationContext(), LivreurMaps.class);
+                 startActivity(i);
+            }
+        });
 
 
 
@@ -37,8 +75,48 @@ public class detailCommandeLivreur extends AppCompatActivity
 
 
 
+/*
+        requestQueue = Volley.newRequestQueue(this);
+        String url = "https://jsonplaceholder.typicode.com/users/"+id;
+
+        final JsonArrayRequest jsonArray = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // Parsing json array response
+                            // loop through each json object
+                            jsonResponse = "";
+                            Log.i("test", response.toString());
+                                //JSONObject person = (JSONObject) response.getJSONObject(jsonResponse);
 
 
+                                //String name = person.getString("name");
+                                //String username = person.getString("username");
+                                //String adresse = person.getString("street");
+                               // Toast.makeText(getApplicationContext(), "ADRESSE "+ adresse, Toast.LENGTH_LONG).show();
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.i("test", error.getMessage());
+
+                    }
+                });
+        Volley.newRequestQueue(this).add(jsonArray);
+        */
+
+
+
+    /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,11 +126,14 @@ public class detailCommandeLivreur extends AppCompatActivity
             }
         });
 
+    */
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -115,9 +196,6 @@ public class detailCommandeLivreur extends AppCompatActivity
         return true;
     }
 
-    public void setMapActivity() {
-        Intent i = new Intent (getApplicationContext(), detailCommandeLivreur.class);
-        startActivity(i);
-    }
+
 
 }

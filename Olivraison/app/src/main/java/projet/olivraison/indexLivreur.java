@@ -40,12 +40,12 @@ public class indexLivreur extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String jsonResponse;
     private ArrayList<String> ArrayCommande = new ArrayList<String>();
-
+    public int ArrayId[];
     private TextView mLoginView;
     private TextView mTestView;
 
     private EditText mPasswordView;
-
+    public int id;
 
     // creation de liste des commande en cours
     ListView listCommandesLivreurs;
@@ -73,7 +73,7 @@ public class indexLivreur extends AppCompatActivity {
 
 
         requestQueue = Volley.newRequestQueue(this);
-        String url = "https://jsonplaceholder.typicode.com/users";
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes";
         listCommandesLivreurs = (ListView) findViewById(R.id.listViewCommandesLivreurs);
 
         JsonArrayRequest jsonArray = new JsonArrayRequest
@@ -89,10 +89,13 @@ public class indexLivreur extends AppCompatActivity {
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
-                                String name = person.getString("name");
-                                String username = person.getString("username");
+                                String name = person.getString("client");
+                                String username = person.getString("adresse");
+                                id = person.getInt("id");
 
-                                jsonResponse = username + ": +"+name;
+                                //ArrayId[i] = id;
+
+                                jsonResponse = " commande : " + id + " -- "+username;
                                 Log.i("test" , jsonResponse);
                                 ArrayCommande.add(jsonResponse);
 
@@ -127,13 +130,15 @@ public class indexLivreur extends AppCompatActivity {
         listCommandesLivreurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
-
 
                 Intent i = new Intent (getApplicationContext(), detailCommandeLivreur.class);
                 ArrayList<String> ArrayCommande = indexLivreur.this.ArrayCommande;
-                i.putExtra("position",ArrayCommande.get(position) );
-                //i.putExtra("name",ArrayCommande.set(2,name) );
+                //Log.i("test", ArrayCommande.get(position) );
+                //int idLocal =  ArrayCommande.get(position);
+                //i.putExtra("position", ArrayId[] );
+
+               // Toast.makeText(getApplicationContext(), "id " + id + ArrayCommande.get(position), Toast.LENGTH_LONG).show();
+                i.putExtra("id", id);
                 startActivity(i);
 
             }
