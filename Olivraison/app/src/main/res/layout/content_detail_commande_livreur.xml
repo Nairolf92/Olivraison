@@ -26,14 +26,67 @@
         android:textSize="12sp" />
 
     <Button
+        android:text="Liste des commandes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:layout_alignTop="@+id/button"
+        android:layout_toLeftOf="@+id/button"
+        android:layout_toStartOf="@+id/button"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp" />
+
+    <Button
         android:text="prendre la commande"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textCommandeLivreur"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="32dp"
         android:id="@+id/button"
-        android:onClick="setMapActivity"
-        />
+        android:layout_above="@+id/textCommandeLivreur"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Titre commande"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="107dp"
+        android:layout_marginStart="107dp" />
+
+    <TextView
+        android:text="Adresse :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="33dp"
+        android:id="@+id/textView3" />
+
+    <TextView
+        android:text="rue :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="22dp"
+        android:id="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textRue"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignRight="@+id/button2"
+        android:layout_alignEnd="@+id/button2"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp" />
+
 
 </RelativeLayout>
