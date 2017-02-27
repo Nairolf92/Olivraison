@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,46 +35,45 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class indexLivreur extends AppCompatActivity {
+public class indexLivreur extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private RequestQueue requestQueue;
     private String jsonResponse;
     private ArrayList<String> ArrayCommande = new ArrayList<String>();
-
+    public int ArrayId[];
     private TextView mLoginView;
     private TextView mTestView;
-
     private EditText mPasswordView;
-
+    public int id;
 
     // creation de liste des commande en cours
     ListView listCommandesLivreurs;
-    String[] commandes = new String[]{
-            "Commande 1: Patte plus", "Commande 2: pidzza Poulet", "Commande 3: pidzza curie", "Commande 4: pidzza 360", "Commande 5: pidzza Viande",
-            "Commande 6 :pidzza porc", "Commande 7: pidzza dinde", "Commande 8: pidzza royale", "Commande 9: pidzza elegance", "Commande 10: pidzza premium"
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_index_livreur);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
 
+        // Récupération des extras
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
+            String fullname = extras.getString("fullname");
+            String id_role = extras.getString("id_role");
+            String id_p = extras.getString("id_p");
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+            View headerView = navigationView.getHeaderView(0);
+            TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
+            navUsername.setText(fullname);
+        }
 
         requestQueue = Volley.newRequestQueue(this);
-        String url = "https://jsonplaceholder.typicode.com/users";
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes";
         listCommandesLivreurs = (ListView) findViewById(R.id.listViewCommandesLivreurs);
 
         JsonArrayRequest jsonArray = new JsonArrayRequest
@@ -89,15 +89,20 @@ public class indexLivreur extends AppCompatActivity {
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
-                                String name = person.getString("name");
-                                String username = person.getString("username");
+                                String name = person.getString("client");
+                                String username = person.getString("adresse");
+                                id = person.getInt("id");
 
-                                jsonResponse = username + ": +"+name;
+                                //ArrayId[i] = id;
+
+
+                                jsonResponse = username + ": +" + name;
+                                Log.i("test", jsonResponse);
+                                jsonResponse = " commande : " + id + " -- "+username;
                                 Log.i("test" , jsonResponse);
                                 ArrayCommande.add(jsonResponse);
 
                             }
-
 
 
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(indexLivreur.this,
@@ -122,33 +127,63 @@ public class indexLivreur extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonArray);
 
 
-
-
         listCommandesLivreurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
 
-
-                Intent i = new Intent (getApplicationContext(), detailCommandeLivreur.class);
+                Intent i = new Intent(getApplicationContext(), detailCommandeLivreur.class);
                 ArrayList<String> ArrayCommande = indexLivreur.this.ArrayCommande;
-                i.putExtra("position",ArrayCommande.get(position) );
+                i.putExtra("position", ArrayCommande.get(position));
                 //i.putExtra("name",ArrayCommande.set(2,name) );
+
+                //Log.i("test", ArrayCommande.get(position) );
+                //int idLocal =  ArrayCommande.get(position);
+                //i.putExtra("position", ArrayId[] );
+
+               // Toast.makeText(getApplicationContext(), "id " + id + ArrayCommande.get(position), Toast.LENGTH_LONG).show();
+                i.putExtra("id", id);
+
                 startActivity(i);
 
             }
         });
 
-        /*
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        */
+    }
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+            case R.id.deconnexion:
+                getIntent().removeExtra("fullname");
+                getIntent().removeExtra("id_role");
+                getIntent().removeExtra("id_p");
+                Intent intent = new Intent(indexLivreur.this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                //drawer.closeDrawer(GravityCompat.START);
+                return true;
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(),
+                "Veuillez vous déconnecter si vous souhaitez revenir à la page précédente ",Toast.LENGTH_SHORT)
+                .show();
+     /*   DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }*/
     }
 
 }

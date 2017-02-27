@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Connexion</string>
+    <string name="app_name">O\'Livraison</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -15,7 +15,7 @@
     <string name="Ajouter_commande">Ajouter une commande</string>
 
     <string name="Set_server">Adresse serveur</string>
-    <string name="Set_Setting">Mon profile</string>
+    <string name="Set_Setting">Mon profil</string>
 
 
     <string name="title_activity_login">Connexion</string>

@@ -9,36 +9,20 @@
             android:title="@string/Liste_commandes_cours" />
 
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/Ajouter_commande" />
-        <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/Liste_commandes" />
     </item>
 
-    <item android:title="Livreurs">
-        <menu>
-        <item
-            android:id="@+id/nav_liste_livreur"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Liste des livreurs" />
-
-        <item
-            android:id="@+id/nav_ajout_livreur"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Ajouter un livreur" />
-        </menu>
-    </item>
-
     <item android:title="Paramètres">
         <menu>
             <item
-                android:id="@+id/deconnexion"
+                android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_manage"
+                android:title="@string/Set_Setting" />
+            <item
+                android:id="@+id/deconnexion"
                 android:title="Déconnexion" />
-
         </menu>
     </item>
 

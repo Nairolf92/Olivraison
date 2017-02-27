@@ -1,10 +1,13 @@
 package projet.olivraison;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,15 +46,13 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
     private ListView listCommandeCoursView;
     private RequestQueue requestQueue;
     private String jsonResponse;
+
     private ArrayList<Commande> commandeCours = new ArrayList<Commande>();
     private TextView mFullName;
     private Menu menu;
 
 
-    //String[] commandes = new String[]{
-     //       "Commande 1: Patte plus", "Commande 2: pidzza Poulet", "Commande 3: pidzza curie", "Commande 4: pidzza 360", "Commande 5: pidzza Viande",
-    //        "Commande 6 :pidzza porc", "Commande 7: pidzza dinde", "Commande 8: pidzza royale", "Commande 9: pidzza elegance", "Commande 10: pidzza premium"
-   // };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +65,23 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         // Récupération des extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur)
+            // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
             String fullname = extras.getString("fullname");
-            String status = extras.getString("status");
+            String id_role = extras.getString("id_role");
+            String id_p = extras.getString("id_p");
+            // Menu
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
             View headerView = navigationView.getHeaderView(0);
+            // Mise en place de l'icone admin dans le menu
+            ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
+            image_role.setImageResource(R.drawable.ic_admin);
+            // Mise en place du nom + prénom de la personne dans le menu
             TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
             navUsername.setText(fullname);
         }
 
-            //recuperation de la vue qui affiche les donnees de l'API
+        //recuperation de la vue qui affiche les donnees de l'API
         listCommandeCoursView = (ListView) findViewById(R.id.listViewCommandeCours);
         final String name = null;
 
@@ -164,17 +173,6 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,40 +189,19 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Toast.makeText(getApplicationContext(),
+                "Veuillez vous déconnecter si vous souhaitez revenir à la page précédente ",Toast.LENGTH_SHORT)
+                .show();
+     /*   DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
-    }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.index, menu);
-        return true;
-    }*/
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        }*/
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -233,24 +210,18 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (item.getItemId()) {
+            case R.id.deconnexion:
+                getIntent().removeExtra("fullname");
+                getIntent().removeExtra("id_role");
+                getIntent().removeExtra("id_p");
+                Intent intent = new Intent(Index.this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                //drawer.closeDrawer(GravityCompat.START);
+                return true;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }
