@@ -14,7 +14,7 @@
     tools:showIn="@layout/app_bar_details_commande_cours">
 
     <TextView
-        android:id="@+id/codecommande"
+        android:id="@+id/codeCommandeCours"
         android:layout_width="fill_parent"
         android:layout_height="26dip"
         android:layout_alignParentBottom="true"

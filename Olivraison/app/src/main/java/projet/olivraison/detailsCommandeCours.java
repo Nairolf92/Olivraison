@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
@@ -29,12 +30,16 @@ public class detailsCommandeCours extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView codecommande = (TextView)findViewById(R.id.codecommande);
-        Intent intent = getIntent();
 
-        String position = intent.getStringExtra("position");
-        codecommande.setText(position);
 
+
+
+        String codecommandecours = this.getIntent().getExtras().getString("id");
+
+        TextView codecommandeView = (TextView)findViewById(R.id.codeCommandeCours);
+
+
+        codecommandeView.setText(codecommandecours);
 
 
 

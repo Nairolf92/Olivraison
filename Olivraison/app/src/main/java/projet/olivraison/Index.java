@@ -42,7 +42,7 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
     private ListView listCommandeCoursView;
     private RequestQueue requestQueue;
     private String jsonResponse;
-    private ArrayList<String> commandeCours = new ArrayList<String>();
+    private ArrayList<Commande> commandeCours = new ArrayList<Commande>();
     private TextView mFullName;
     private Menu menu;
 
@@ -78,7 +78,8 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
 
         //initialisation de la requette
         requestQueue = Volley.newRequestQueue(this);
-        String url = "http://jsonplaceholder.typicode.com/users";
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes/todo";
+        String urlClient = "http://antoine-lucas.fr/api_android/web/index.php/api/client/";
         JsonArrayRequest jsonArray = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                     @Override
@@ -92,15 +93,22 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
-                                String name = person.getString("name");
+                                Integer idClient = person.getInt("client");
+                                Integer id = person.getInt("id");
 
-                                jsonResponse = "Cmde: "+ name;
-                                commandeCours.add(jsonResponse);
+                                Commande commande = new Commande();
+
+                                commande.setIdClient(idClient);
+                                commande.setId(id);
+
+
+                                commandeCours.add(commande); 
 
                             }
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(Index.this,
-                                    android.R.layout.simple_list_item_1, commandeCours);
+
+
+                            ArrayAdapter<Commande> adapter = new CommandeCoursAdapter(Index.this, R.layout.activity_index, commandeCours);
                             listCommandeCoursView.setAdapter(adapter);
 
 
@@ -124,19 +132,37 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();
+              Commande commande = commandeCours.get(position);
+
+                /*Toast.makeText(getApplicationContext(),
+                        "Item name " + commandeCours.get(position).getNom(), Toast.LENGTH_LONG)
+                        .show();*/
+
+
+                // ListView Clicked item index
+                //int itemPosition     = position;
+
+                // ListView Clicked item value
+                // String  selectedCommande    = (String) listCommandeCoursView.getItemAtPosition(position);
+
+                // Show Alert
+                //Toast.makeText(getApplicationContext(),
+                //        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
+                //        .show();
+
+
+
 
                 //quand je clique sur un element, j'affiche la vue details pour afficher les details de la commande
+                /*Commande commandeCours = Index.this.commandeCours;
+                  selectedCommande = commandeCours.get(position);*/
+
                 Intent i = new Intent (getApplicationContext(), detailsCommandeCours.class);
-                ArrayList<String> commandeCours = Index.this.commandeCours;
-                i.putExtra("position",commandeCours.get(position) );
-                i.putExtra("name",commandeCours.set(2,name) );
+                i.putExtra("id", commande.getId() );
                 startActivity(i);
             }
         });
-///////////////////////////////////////////////////////////////
+
 
 
 
