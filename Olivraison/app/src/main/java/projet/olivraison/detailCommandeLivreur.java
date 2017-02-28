@@ -40,6 +40,7 @@ public class detailCommandeLivreur extends AppCompatActivity
 
     private RequestQueue requestQueue;
     private String jsonResponse;
+    Integer id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class detailCommandeLivreur extends AppCompatActivity
 
         String position = intent.getStringExtra("position");
 
-        Integer id = 0;
+
         id = intent.getIntExtra("id", id);
 
         //textCommandeLivreur.setText(position);
@@ -80,12 +81,14 @@ public class detailCommandeLivreur extends AppCompatActivity
             @Override
             public void onClick(View view){
                 //Toast.makeText(getApplicationContext(), "bouton clicker", Toast.LENGTH_LONG).show();
+
                 Intent i = new Intent (getApplicationContext(), LivreurMaps.class);
+                i.putExtra("id", id);
                  startActivity(i);
             }
         });
 
-        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/1";
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/"+id;
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -105,47 +108,8 @@ public class detailCommandeLivreur extends AppCompatActivity
                 });
 // Access the RequestQueue through your singleton class.
         Volley.newRequestQueue(this).add(jsObjRequest);
-    /*
-        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/1";
-
-        JsonObjectRequest json = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            // Parsing json array response
-                            // loop through each json object
-                            //Log.i("test", response);
-                            jsonResponse = "";
-
-                            JSONObject person = (JSONObject) response.getJSONObject(jsonResponse);
-                            Log.i("test", response.toString());
-                            //String adresse = jsonResponse;
-                            //Toast.makeText(getApplicationContext(), "adresse "+ adresse, Toast.LENGTH_LONG).show();
-
-
-                        } catch (JSONException e) {
-                            Log.i("test", e.toString());
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        Log.i("test", error.getMessage());
-
-                    }
-                });
-        Volley.newRequestQueue(this).add(json);
-
-        */
-
-
 
     /*
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
