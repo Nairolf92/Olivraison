@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
@@ -29,12 +30,16 @@ public class detailsCommandeCours extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView codecommande = (TextView)findViewById(R.id.codecommande);
-        Intent intent = getIntent();
 
-        String position = intent.getStringExtra("position");
-        codecommande.setText(position);
 
+
+
+        String codecommandecours = this.getIntent().getExtras().getString("id");
+
+        TextView codecommandeView = (TextView)findViewById(R.id.codeCommandeCours);
+
+
+        codecommandeView.setText(codecommandecours);
 
 
 
@@ -83,7 +88,7 @@ public class detailsCommandeCours extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.deconnexion) {
             return true;
         }
 
@@ -96,19 +101,7 @@ public class detailsCommandeCours extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

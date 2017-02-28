@@ -5,8 +5,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 
@@ -63,11 +66,11 @@ public class LoginActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String jsonResponse;
     private ArrayList<String> users = new ArrayList<String>();
-    private String id;
     private String fullname;
     private static final String PREFS_NAME = "";
     // 1 = admin et 0 = livreur
-    private String status;
+    private String id_role;
+    private String id_p;
     
 
 
@@ -105,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //mTestView = (TextView) findViewById(R.id.test);
         requestQueue = Volley.newRequestQueue(this);
-        String url = "http://jsonplaceholder.typicode.com/users";
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/users";
         JsonArrayRequest jsonArray = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                     @Override
@@ -119,12 +122,14 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
-                                String name = person.getString("name");
-                                String username = person.getString("username");
-                                String id_role = person.getString("id");
+                                String login = person.getString("login");
+                                String password = person.getString("password");
+                                String id_role = person.getString("id_role");
+                                String id = person.getString("id");
 
-                                jsonResponse = username + ":"+username + ":" + id_role;
+                                jsonResponse = login+":"+password+":"+id_role+":"+id;
                                 users.add(jsonResponse);
+                                Log.i("jsonresponse",jsonResponse);
 
                             }
                             //mTestView.setText(Arrays.toString(users.toArray()));
@@ -270,16 +275,19 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("pieces0",pieces[0]);
                 Log.i("pieces1",pieces[1]);
                 Log.i("pieces2", pieces[2]);
+                Log.i("pieces3", pieces[3]);
                     if (pieces[0].equals(mEmail)) {
                         // Account exists, return true if the password matches.
                         // On récupère le statut de la personne pour plus tard
-                        status = pieces[2];
+                        id_role = pieces[2];
                         // On récupère le prénom + nom de la personne pour plus tard
                         fullname = pieces[0] + " " + pieces[1];
+                        // ON récupère son id
+                        id_p = pieces[3];
                         return pieces[1].equals(mPassword);
                     }
             }
-            return true;
+            return false;
         }
 
         @Override
@@ -288,18 +296,21 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                Log.i("status",status);
+                Log.i("id_role",id_role);
 
-                if (status.equals("1")) {
+                if (id_role.equals("1")) {
                     Log.i("admin","ok");
                     Intent intent = new Intent(LoginActivity.this, Index.class);
-                    intent.putExtra("status",status);
+                    intent.putExtra("id_role",id_role);
                     intent.putExtra("fullname",fullname);
+                    intent.putExtra("id_p",id_p);
                     startActivity(intent);
-                }else if(status.equals("2")){
+                }else if(id_role.equals("0")){
+                    Log.i("user","ok");
                     Intent intent = new Intent(LoginActivity.this, indexLivreur.class);
-                    intent.putExtra("status",status);
+                    intent.putExtra("id_role",id_role);
                     intent.putExtra("fullname",fullname);
+                    intent.putExtra("id_p",id_p);
                     startActivity(intent);
                 }
             } else {
@@ -313,6 +324,25 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Fermer l'application")
+                .setMessage("Êtes-vous sûr de vouloir fermer l'application ?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishAndRemoveTask();
+                        return;
+                    }
+                })
+                .setNegativeButton("Non", null)
+                .show();
     }
 }
 

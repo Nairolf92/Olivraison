@@ -1,35 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
+    <item android:title="Commandes">
+        <menu>
+            <item
+                android:id="@+id/nav_livraison_cours"
+                android:icon="@drawable/ic_shopping_cart_black_24dp"
+                android:title="@string/Liste_commandes_cours" />
 
-    <item android:title="Communicate">
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@drawable/ic_add_shopping_cart_black_24dp"
+                android:title="@string/Ajouter_commande" />
+            <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@drawable/ic_reorder_black_24dp"
+                android:title="@string/Liste_commandes" />
+        </menu>
+    </item>
+
+    <item android:title="Livreurs">
+        <menu>
+            <item
+                android:id="@+id/nav_liste_livreur"
+                android:icon="@drawable/ic_people_black_24dp"
+                android:title="Liste des livreurs" />
+
+            <item
+                android:id="@+id/nav_ajout_livreur"
+                android:icon="@drawable/ic_person_add_black_24dp"
+                android:title="Ajouter un livreur" />
+        </menu>
+    </item>
+
+    <item android:title="Paramètres">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/Set_Setting" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/deconnexion"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
+                android:title="Déconnexion" />
+
         </menu>
     </item>
 
