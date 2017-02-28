@@ -64,10 +64,20 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
         int LOCATION_REFRESH_TIME = 100;
         int LOCATION_REFRESH_DISTANCE = 1;
 
+
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .build();
+
+        /*
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double MaLongitude = location.getLongitude();
+        double MaLatitude = location.getLatitude();
+        MetreAJourItineraire();
+        */
+
+       // mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
 
 /*
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
