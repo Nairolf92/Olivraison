@@ -10,7 +10,7 @@
     <string name="Ajouter_livreur">Ajouter un Livreur</string>
     <string name="Liste_livreur">Liste des Livreurs</string>
 
-    <string name="Liste_commandes_cours">Livraison en cours </string>
+    <string name="Liste_commandes_cours">Commandes en cours </string>
     <string name="Liste_commandes">Liste des commandes </string>
     <string name="Ajouter_commande">Ajouter une commande</string>
 

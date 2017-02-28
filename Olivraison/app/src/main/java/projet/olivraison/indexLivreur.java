@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import android.widget.EditText;
@@ -61,13 +62,19 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
         // Récupération des extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            // On récupère le extra de déconnexion si l'on souhaite se déconnecter
+
             // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
             String fullname = extras.getString("fullname");
             String id_role = extras.getString("id_role");
             String id_p = extras.getString("id_p");
+            // Menu
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
             View headerView = navigationView.getHeaderView(0);
+            // Mise en place de l'icone admin dans le menu
+            ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
+            image_role.setImageResource(R.drawable.ic_livreur);
             TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
             navUsername.setText(fullname);
         }
@@ -164,8 +171,7 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
                 getIntent().removeExtra("fullname");
                 getIntent().removeExtra("id_role");
                 getIntent().removeExtra("id_p");
-                Intent intent = new Intent(indexLivreur.this, LoginActivity.class);
-                startActivity(intent);
+                finish();
                 return true;
             default:
                 //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

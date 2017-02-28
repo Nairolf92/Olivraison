@@ -215,8 +215,7 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                 getIntent().removeExtra("fullname");
                 getIntent().removeExtra("id_role");
                 getIntent().removeExtra("id_p");
-                Intent intent = new Intent(Index.this, LoginActivity.class);
-                startActivity(intent);
+                finish();
                 return true;
             default:
                 //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
