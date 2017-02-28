@@ -40,7 +40,7 @@ public class indexLivreur extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String jsonResponse;
     private ArrayList<String> ArrayCommande = new ArrayList<String>();
-    public int ArrayId[];
+    public int ArrayId[] = new int[9999];
     private TextView mLoginView;
     private TextView mTestView;
 
@@ -73,7 +73,7 @@ public class indexLivreur extends AppCompatActivity {
 
 
         requestQueue = Volley.newRequestQueue(this);
-        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes";
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes/livreur/1";
         listCommandesLivreurs = (ListView) findViewById(R.id.listViewCommandesLivreurs);
 
         JsonArrayRequest jsonArray = new JsonArrayRequest
@@ -93,10 +93,10 @@ public class indexLivreur extends AppCompatActivity {
                                 String username = person.getString("adresse");
                                 id = person.getInt("id");
 
-                                //ArrayId[i] = id;
-
+                                ArrayId[i] = id;
+                                //Toast.makeText(getApplicationContext(), "id " + ArrayId[i], Toast.LENGTH_LONG).show();
                                 jsonResponse = " commande : " + id + " -- "+username;
-                                Log.i("test" , jsonResponse);
+                                //Log.i("test" , jsonResponse);
                                 ArrayCommande.add(jsonResponse);
 
                             }
@@ -133,12 +133,13 @@ public class indexLivreur extends AppCompatActivity {
 
                 Intent i = new Intent (getApplicationContext(), detailCommandeLivreur.class);
                 ArrayList<String> ArrayCommande = indexLivreur.this.ArrayCommande;
+
                 //Log.i("test", ArrayCommande.get(position) );
-                //int idLocal =  ArrayCommande.get(position);
+                String idLocal =  ArrayCommande.get(position);
                 //i.putExtra("position", ArrayId[] );
 
-               // Toast.makeText(getApplicationContext(), "id " + id + ArrayCommande.get(position), Toast.LENGTH_LONG).show();
-                i.putExtra("id", id);
+               Toast.makeText(getApplicationContext(), "id " + ArrayId[position], Toast.LENGTH_LONG).show();
+                i.putExtra("id", ArrayId[position]);
                 startActivity(i);
 
             }

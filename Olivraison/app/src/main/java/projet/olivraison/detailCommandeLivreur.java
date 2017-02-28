@@ -26,6 +26,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -52,12 +53,14 @@ public class detailCommandeLivreur extends AppCompatActivity
 
         String position = intent.getStringExtra("position");
 
-        long id = 0;
-        id = intent.getLongExtra("id", id);
+        Integer id = 0;
+        id = intent.getIntExtra("id", id);
 
         //textCommandeLivreur.setText(position);
 
         Button monBouton = (Button) findViewById(R.id.button);
+        TextView TextAdresse = (TextView) findViewById(R.id.TextAdresse);
+
         monBouton.setText("prendre la commande : "+ id);
 
         monBouton.setOnClickListener(new View.OnClickListener(){
@@ -69,36 +72,47 @@ public class detailCommandeLivreur extends AppCompatActivity
             }
         });
 
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/1";
 
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //mTxtDisplay.setText("Response: " + response.toString());
+                        Log.i("test", response.toString());
+                    }
+                }, new Response.ErrorListener() {
 
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
 
+                    }
+                });
+// Access the RequestQueue through your singleton class.
+        Volley.newRequestQueue(this).add(jsObjRequest);
+    /*
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/1";
 
-
-/*
-        requestQueue = Volley.newRequestQueue(this);
-        String url = "https://jsonplaceholder.typicode.com/users/"+id;
-
-        final JsonArrayRequest jsonArray = new JsonArrayRequest
+        JsonObjectRequest json = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             // Parsing json array response
                             // loop through each json object
+                            //Log.i("test", response);
                             jsonResponse = "";
+
+                            JSONObject person = (JSONObject) response.getJSONObject(jsonResponse);
                             Log.i("test", response.toString());
-                                //JSONObject person = (JSONObject) response.getJSONObject(jsonResponse);
-
-
-                                //String name = person.getString("name");
-                                //String username = person.getString("username");
-                                //String adresse = person.getString("street");
-                               // Toast.makeText(getApplicationContext(), "ADRESSE "+ adresse, Toast.LENGTH_LONG).show();
-
+                            //String adresse = jsonResponse;
+                            //Toast.makeText(getApplicationContext(), "adresse "+ adresse, Toast.LENGTH_LONG).show();
 
 
                         } catch (JSONException e) {
+                            Log.i("test", e.toString());
                             e.printStackTrace();
                         }
                     }
@@ -111,9 +125,9 @@ public class detailCommandeLivreur extends AppCompatActivity
 
                     }
                 });
-        Volley.newRequestQueue(this).add(jsonArray);
-        */
+        Volley.newRequestQueue(this).add(json);
 
+        */
 
 
     /*
