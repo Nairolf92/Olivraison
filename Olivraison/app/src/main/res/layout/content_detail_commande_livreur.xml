@@ -13,9 +13,6 @@
     tools:context="projet.olivraison.detailCommandeLivreur"
     tools:showIn="@layout/app_bar_detail_commande_livreur">
 
-
-
-
     <TextView
         android:id="@+id/textCommandeLivreur"
         android:layout_width="fill_parent"
@@ -26,36 +23,16 @@
         android:textSize="12sp" />
 
     <Button
-        android:text="Liste des commandes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:layout_alignTop="@+id/button"
-        android:layout_toLeftOf="@+id/button"
-        android:layout_toStartOf="@+id/button"
-        android:layout_marginRight="27dp"
-        android:layout_marginEnd="27dp" />
-
-    <Button
         android:text="prendre la commande"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
+        android:background="#AA0114"
+        android:textColor="#FFF"
         android:id="@+id/button"
         android:layout_above="@+id/textCommandeLivreur"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="Titre commande"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="107dp"
-        android:layout_marginStart="107dp" />
+        android:layout_gravity="center|bottom"
+        />
 
     <TextView
         android:text="Adresse :"
@@ -64,7 +41,6 @@
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="22dp" />
@@ -80,5 +56,14 @@
         android:layout_marginEnd="10dp"
         android:id="@+id/TextAdresse" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titreCommande"
+        android:textColor="#000000"
+        android:text="Référence : RT68596478"
+        android:textSize="36px"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
