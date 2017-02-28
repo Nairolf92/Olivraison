@@ -61,26 +61,23 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
 
         // Récupération des extras
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            // On récupère le extra de déconnexion si l'on souhaite se déconnecter
-
-            // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
-            String fullname = extras.getString("fullname");
-            String id_role = extras.getString("id_role");
-            String id_p = extras.getString("id_p");
-            // Menu
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-            View headerView = navigationView.getHeaderView(0);
-            // Mise en place de l'icone admin dans le menu
-            ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
-            image_role.setImageResource(R.drawable.ic_livreur);
-            TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
-            navUsername.setText(fullname);
-        }
+        // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
+        final String fullname = extras.getString("fullname");
+        final String id_role = extras.getString("id_role");
+        final String id_p = extras.getString("id_p");
+        // Définition du menu
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        // Mise en place de l'icone livreur dans le menu
+        ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
+        image_role.setImageResource(R.drawable.ic_livreur);
+        // Mise en place du fullname dans le menu de gauche
+        TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
+        navUsername.setText(fullname);
 
         requestQueue = Volley.newRequestQueue(this);
-        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes/livreur/1";
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes/livreur/"+id_p;
         listCommandesLivreurs = (ListView) findViewById(R.id.listViewCommandesLivreurs);
 
         JsonArrayRequest jsonArray = new JsonArrayRequest
@@ -160,6 +157,10 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
                // Toast.makeText(getApplicationContext(), "id " + id + ArrayCommande.get(position), Toast.LENGTH_LONG).show();
                 //i.putExtra("id", id);
 
+
+                i.putExtra("fullname",fullname);
+                i.putExtra("id_p",id_p);
+                i.putExtra("id_role",id_role);
 
                 startActivity(i);
 
