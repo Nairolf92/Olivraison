@@ -14,7 +14,7 @@
         android:text="Terminer la commande"
         android:padding="10dp"
         android:layout_marginBottom="30dp"
-
+        android:id="@+id/terminer"
         android:paddingRight="10dp"/>
 
 

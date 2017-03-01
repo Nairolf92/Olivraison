@@ -154,7 +154,7 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
                 i.putExtra("id", ArrayId[position]);
 
                // Toast.makeText(getApplicationContext(), "id " + id + ArrayCommande.get(position), Toast.LENGTH_LONG).show();
-                i.putExtra("id", id);
+                //i.putExtra("id", id);
 
 
                 i.putExtra("fullname",fullname);

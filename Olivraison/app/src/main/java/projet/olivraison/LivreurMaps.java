@@ -1,5 +1,6 @@
 package projet.olivraison;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -11,6 +12,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -48,6 +51,7 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
     private String APIDIRECTIONURL1 = "https://maps.googleapis.com/maps/api/directions/json?origin=";
     private String APIDIRECTIONURL2 = "&destination=";
     private String APIDIRECTIONURL3 =  "&key=AIzaSyD5h5tczzGszSA26zOu-xhEgTVTEvcmC4o&mode=driving";
+
     public double DepartLatitude = 48.951434;
     public double DepartLongitude = 2.386974;
     LatLng sydney = new LatLng(DepartLatitude, DepartLongitude);
@@ -64,6 +68,34 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
         int LOCATION_REFRESH_TIME = 100;
         int LOCATION_REFRESH_DISTANCE = 1;
 
+        Button monBouton = (Button) findViewById(R.id.terminer);
+
+        monBouton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/1?statut=2";
+
+                JsonObjectRequest jsObjRequests = new JsonObjectRequest
+                        (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.i("test", "Response: " + response.toString());
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // TODO Auto-generated method stub
+
+                            }
+                        });
+              //  Volley.newRequestQueue(getApplicationContext()).add(jsObjRequests);
+
+                Intent i = new Intent (getApplicationContext(), indexLivreur.class);
+                startActivity(i);
+            }
+        });
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -91,8 +123,6 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            //Log.i("test", "yiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-            //Log.i("location", ""+ String.valueOf(mLastLocation.getLatitude()));
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME, LOCATION_REFRESH_DISTANCE, mLocationListener);
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -125,8 +155,6 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
         } else {
             // Show rationale and request permission.
         }
-
-
             /*
             mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(48, 2))
@@ -144,14 +172,7 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
             System.out.println("onLocationChanged");
             Log.i("test", "yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             mLastLocation = location;
-            // mainLabel.setText("Latitude:" + String.valueOf(location.getLatitude()) + "\n" + "Longitude:" + String.valueOf(location.getLongitude()));
-            /*Toast.makeText(getApplicationContext(),
 
-                    "position Latitude :  "+ String.valueOf(location.getLatitude()) +
-                    " position Longitude : "+    String.valueOf(location.getLongitude())
-
-                    , Toast.LENGTH_LONG).show();
-                    */
             MaLatitude = location.getLatitude();
             MaLongitude = location.getLongitude();
 
@@ -251,18 +272,12 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
                                         .color(Color.BLUE)
                                 );
                                 */
-
                                 polylines.add(mMap.addPolyline(new PolylineOptions()
                                         .add(new LatLng(DebutLat,DebutLong), new LatLng(FinLat, FinLong))
                                         .width(5)
                                         .color(Color.BLUE)
                                 ));
                             }
-
-
-
-
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -279,9 +294,11 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
 
                     }
                 });
-// Access the RequestQueue through your singleton class.
+
         Volley.newRequestQueue(this).add(jsObjRequest);
 
 
     }
+
+
 }
