@@ -11,22 +11,71 @@ public class Commande {
 
     }
 
-    Integer id;
-    Integer idClient;
+    String reference;
+    String nom;
+    String prenom;
+    String phone;
+    String adresseLivraison;
+    String prix_total;
 
-    public Integer getId() {
-        return id;
+
+    public String getReference() {
+
+        return reference;
+    }
+    public void setReference(String reference) {
+
+        this.reference = reference;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    //Nom
+    public String getNom() {
+
+        return nom;
+    }
+    public void setNom(String nom) {
+
+        this.nom = nom;
     }
 
-    public Integer getIdClient() {
-        return idClient;
+
+    //PreNom
+    public String getPrenom() {
+
+        return prenom;
+    }
+    public void setPrenom(String prenom) {
+
+        this.prenom = prenom;
     }
 
-    public void setIdClient(Integer idClient) {
-        this.idClient = idClient;
+    //Phone
+    public String getPhone() {
+
+        return phone;
+    }
+    public void setPhone(String phone) {
+
+        this.phone = phone;
+    }
+
+    //AdresseLivraison
+    public String getAdresseLivraison() {
+
+        return adresseLivraison;
+    }
+    public void setAdresseLivraison(String adresseLivraison) {
+
+        this.adresseLivraison = adresseLivraison;
+    }
+
+    //prix_total
+    public String getPrixTotal() {
+
+        return prix_total;
+    }
+    public void setPrixTotal(String prix_total) {
+
+        this.prix_total = prix_total;
     }
 }

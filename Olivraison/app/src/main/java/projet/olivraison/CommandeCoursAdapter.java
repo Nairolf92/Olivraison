@@ -30,10 +30,16 @@ public class CommandeCoursAdapter extends ArrayAdapter<Commande>{
         Commande commande = getItem(position);
 
         TextView idCommandeCours = (TextView) rowView.findViewById(R.id.idCommandeCours);
-        idCommandeCours.setText(commande.getId().toString());
+        idCommandeCours.setText(commande.getReference().toString());
 
-        //TextView nomCommandeCours = (TextView) rowView.findViewById(R.id.nomCommandeCours);
-        //nomCommandeCours.setText(commande.getIdClient()) ;
+        TextView nomCommandeCours = (TextView) rowView.findViewById(R.id.nomCommandeCours);
+        nomCommandeCours.setText(commande.getNom() + " " + commande.getPrenom()) ;
+
+        TextView phoneClientCommandeCours = (TextView) rowView.findViewById(R.id.contactClientCommandeCours);
+        phoneClientCommandeCours.setText(commande.getPhone()) ;
+
+        TextView adresseCommandeCours = (TextView) rowView.findViewById(R.id.adresseCommandeCours);
+        adresseCommandeCours.setText(commande.getAdresseLivraison()) ;
 
 
 

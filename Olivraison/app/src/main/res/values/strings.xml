@@ -40,5 +40,12 @@
     <string name="title_activity_details_commande_cours">details Commande</string>
     <string name="title_activity_detail_commande_livreur">detailCommandeLivreur</string>
     <string name="title_activity_livreur_maps">Map</string>
+    <string name="title_activity_addcommande">Addcommande</string>
+
+    <string-array name="civilite">
+        <item>Mr</item>
+        <item>Mme</item>
+        <item>Mlle</item>
+    </string-array>
 </resources>
 

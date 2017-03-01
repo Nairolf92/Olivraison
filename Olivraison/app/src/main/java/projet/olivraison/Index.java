@@ -88,7 +88,7 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         //initialisation de la requette
         requestQueue = Volley.newRequestQueue(this);
         String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes/todo";
-        String urlClient = "http://antoine-lucas.fr/api_android/web/index.php/api/client/";
+
         JsonArrayRequest jsonArray = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                     @Override
@@ -102,13 +102,23 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
-                                Integer idClient = person.getInt("client");
-                                Integer id = person.getInt("id");
+                                String reference = person.getString("reference");
+                                String nom = person.getString("nom");
+                                String prenom = person.getString("prenom");
+                                String phone = person.getString("phone");
+                                String adresseLivraison = person.getString("adresse");
+                                String prix_total = person.getString("prix_total");
+
 
                                 Commande commande = new Commande();
 
-                                commande.setIdClient(idClient);
-                                commande.setId(id);
+                                commande.setReference(reference);
+                                commande.setNom(nom);
+                                commande.setPrenom(prenom);
+                                commande.setPhone(phone);
+                                commande.setAdresseLivraison(adresseLivraison);
+                                commande.setPrixTotal(prix_total);
+
 
 
                                 commandeCours.add(commande); 
@@ -167,7 +177,12 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                   selectedCommande = commandeCours.get(position);*/
 
                 Intent i = new Intent (getApplicationContext(), detailsCommandeCours.class);
-                i.putExtra("id", commande.getId() );
+                i.putExtra("reference", commande.getReference() );
+                i.putExtra("nom", commande.getNom());
+                i.putExtra("prenom", commande.getPrenom());
+                i.putExtra("phone", commande.getPhone());
+                i.putExtra("adresseLivraison", commande.getAdresseLivraison() );
+                i.putExtra("prix_total", commande.getPrixTotal());
                 startActivity(i);
             }
         });
@@ -177,8 +192,11 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Activiter d'ajout de commande a creer", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Activiter d'ajout de commande a creer", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show(); */
+
+                Intent newCommandeView = new Intent (getApplicationContext(), Addcommande.class);
+                startActivity(newCommandeView);
             }
         });
 
