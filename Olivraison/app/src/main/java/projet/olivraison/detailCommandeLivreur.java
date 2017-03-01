@@ -33,6 +33,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import static projet.olivraison.R.id.fab;
 import static projet.olivraison.R.id.fullname;
@@ -69,7 +70,7 @@ public class detailCommandeLivreur extends AppCompatActivity
         navUsername.setText(fullname);
 
         // Titre de la commande
-        TextView titreCommande = (TextView)findViewById(R.id.titreCommande);
+        final TextView titreCommande = (TextView)findViewById(R.id.titreCommande);
 
         TextView textCommandeLivreur = (TextView)findViewById(R.id.textCommandeLivreur);
         Intent intent = getIntent();
@@ -82,9 +83,15 @@ public class detailCommandeLivreur extends AppCompatActivity
         //textCommandeLivreur.setText(position);
 
         Button monBouton = (Button) findViewById(R.id.button);
-        TextView TextAdresse = (TextView) findViewById(R.id.TextAdresse);
+       // TextView TextAdresse = (TextView) findViewById(R.id.TextAdresse);
+        final TextView LabelRue = (TextView) findViewById(R.id.LabelRue);
+        final TextView textNom = (TextView) findViewById(R.id.TextNom);
+        final TextView textPrenom = (TextView) findViewById(R.id.TextPrenom);
+        final TextView textTelephone = (TextView) findViewById(R.id.TextTelephone);
+        final TextView Textprix = (TextView) findViewById(R.id.TextPrix);
 
-        monBouton.setText("prendre la commande n° : "+id);
+
+        monBouton.setText("prendre la commande");
 
         monBouton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -106,6 +113,30 @@ public class detailCommandeLivreur extends AppCompatActivity
                     public void onResponse(JSONObject response) {
                         //mTxtDisplay.setText("Response: " + response.toString());
                         Log.i("test", response.toString());
+
+                        try {
+                            String jsonResultat = response.toString();
+                            JSONObject jsonObject = new JSONObject(jsonResultat);
+
+                            String adresse = response.getString("adresse");
+                            String nom = response.getString("nom");
+                            String ref = response.getString("reference");
+                            String prenom = response.getString("prenom");
+                            String telephone = response.getString("phone");
+                            String Prix = response.getString("prix_total");
+
+                            LabelRue.setText(adresse.toString());
+                            textNom.setText(nom.toString());
+                            titreCommande.setText("Réference: "+ref);
+                            textPrenom.setText(prenom.toString());
+                            textTelephone.setText(telephone.toString());
+                            Textprix.setText(Prix+ "€");
+
+
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
 

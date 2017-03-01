@@ -58,6 +58,7 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
     public double MaLatitude, MaLongitude;
     Polyline line;
     List<Polyline> polylines = new ArrayList<Polyline>();
+    Integer id = 0;
 
 
     @Override
@@ -68,11 +69,15 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
         int LOCATION_REFRESH_TIME = 100;
         int LOCATION_REFRESH_DISTANCE = 1;
 
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", id);
+
         Button monBouton = (Button) findViewById(R.id.terminer);
 
         monBouton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+    /*
                 String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/1?statut=2";
 
                 JsonObjectRequest jsObjRequests = new JsonObjectRequest
@@ -80,7 +85,9 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
 
                             @Override
                             public void onResponse(JSONObject response) {
-                                Log.i("test", "Response: " + response.toString());
+                               // Log.i("test", "Response: " + response.toString());
+                                //Intent i = new Intent (getBaseContext(), indexLivreur.class);
+                                //startActivity(i);
                             }
                         }, new Response.ErrorListener() {
 
@@ -90,11 +97,16 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
 
                             }
                         });
-              //  Volley.newRequestQueue(getApplicationContext()).add(jsObjRequests);
+                Volley.newRequestQueue(getBaseContext()).add(jsObjRequests);
+                */
 
-                Intent i = new Intent (getApplicationContext(), indexLivreur.class);
+
+                Intent i = new Intent (getApplicationContext(), LivreurMaps.class);
                 startActivity(i);
             }
+
+
+
         });
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);

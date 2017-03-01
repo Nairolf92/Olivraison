@@ -35,35 +35,119 @@
         />
 
     <TextView
-        android:text="Adresse :"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:id="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="22dp" />
-
-    <TextView
-        android:text="rue...."
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_toLeftOf="@+id/button"
-        android:layout_toStartOf="@+id/button"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:id="@+id/TextAdresse" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/titreCommande"
         android:textColor="#000000"
         android:text="Référence : RT68596478"
-        android:textSize="36px"
+        android:textSize="20dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Adresse :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:id="@+id/textView3"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/titreCommande"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp" />
+
+    <TextView
+        android:text="Nom :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/baliseNom"
+        android:textColor="#000000"
+        android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3" />
+
+    <TextView
+        android:text="Prenom :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:id="@+id/textView5"
+        android:textColor="#000000"
+        android:layout_below="@+id/baliseNom"
+        android:layout_alignLeft="@+id/baliseNom"
+        android:layout_alignStart="@+id/baliseNom" />
+
+    <TextView
+        android:text="Telephone :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="#000000"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/textView5"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
+
+    <TextView
+        android:text="Prix :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:textColor="#000000"
+        android:id="@+id/textView9"
+        android:layout_below="@+id/textView7"
+        android:layout_alignLeft="@+id/textView7"
+        android:layout_alignStart="@+id/textView7" />
+
+    <TextView
+        android:text="00$"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView9"
+        android:layout_toLeftOf="@+id/TextTelephone"
+        android:layout_toStartOf="@+id/TextTelephone"
+        android:id="@+id/TextPrix" />
+
+    <TextView
+        android:text="0612345678"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TextTelephone"
+        android:layout_alignBaseline="@+id/textView7"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_alignRight="@+id/titreCommande"
+        android:layout_alignEnd="@+id/titreCommande"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp" />
+
+    <TextView
+        android:text="Prenom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TextPrenom"
+        android:layout_above="@+id/textView7"
+        android:layout_alignLeft="@+id/TextTelephone"
+        android:layout_alignStart="@+id/TextTelephone" />
+
+    <TextView
+        android:text="NomDeFamille"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TextNom"
+        android:layout_above="@+id/textView5"
+        android:layout_alignLeft="@+id/TextPrenom"
+        android:layout_alignStart="@+id/TextPrenom" />
+
+    <TextView
+        android:text="rue.."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LabelRue"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/TextNom"
+        android:layout_alignStart="@+id/TextNom" />
 
 </RelativeLayout>
