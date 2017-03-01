@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,7 +52,22 @@ public class detailsCommandeCours extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        // Récupération des extras
+        Bundle extras = getIntent().getExtras();
+        // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
+        final String fullname = extras.getString("fullname");
+        final String id_role = extras.getString("id_role");
+        final String id_p = extras.getString("id_p");
+        // Définition du menu
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        // Mise en place de l'icone livreur dans le menu
+        ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
+        image_role.setImageResource(R.drawable.ic_livreur);
+        // Mise en place du fullname dans le menu de gauche
+        TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
+        navUsername.setText(fullname);
 
 
         //initialisation de la requette
@@ -117,13 +133,6 @@ public class detailsCommandeCours extends AppCompatActivity
         Volley.newRequestQueue(this).add(jsonArray);
 
 
-
-
-
-
-
-
-
         //recuperation et affichage des details d'une commande
 
         String codecommandecours = this.getIntent().getExtras().getString("reference");
@@ -147,68 +156,35 @@ public class detailsCommandeCours extends AppCompatActivity
         TextView totalCmdView = (TextView)findViewById(R.id.totalCmd);
         totalCmdView.setText(totalCmd);
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        }); */
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.details_commande_cours, menu);
-        return true;
-    }*/
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.deconnexion) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+       finish();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        switch (item.getItemId()) {
+            case R.id.deconnexion:
+                getIntent().removeExtra("fullname");
+                getIntent().removeExtra("id_role");
+                getIntent().removeExtra("id_p");
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                //drawer.closeDrawer(GravityCompat.START);
+                return true;
+        }
     }
 }

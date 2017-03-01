@@ -96,4 +96,17 @@
         android:layout_marginBottom="10dp"
         android:id="@+id/textView8" />
 
+    <Button
+        android:text="Ajouter la commande"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#AA0114"
+        android:textColor="#FFF"
+        android:id="@+id/bouton_ajouter_commande"
+        android:layout_gravity="center|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="44dp" />
+
 </RelativeLayout>

@@ -64,22 +64,20 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
 
         // Récupération des extras
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
-            String fullname = extras.getString("fullname");
-            String id_role = extras.getString("id_role");
-            String id_p = extras.getString("id_p");
-            // Menu
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-            View headerView = navigationView.getHeaderView(0);
-            // Mise en place de l'icone admin dans le menu
-            ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
-            image_role.setImageResource(R.drawable.ic_admin);
-            // Mise en place du nom + prénom de la personne dans le menu
-            TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
-            navUsername.setText(fullname);
-        }
+        // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
+        final String fullname = extras.getString("fullname");
+        final String id_role = extras.getString("id_role");
+        final String id_p = extras.getString("id_p");
+        // Définition du menu
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        // Mise en place de l'icone livreur dans le menu
+        ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
+        image_role.setImageResource(R.drawable.ic_admin);
+        // Mise en place du fullname dans le menu de gauche
+        TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
+        navUsername.setText(fullname);
 
         //recuperation de la vue qui affiche les donnees de l'API
         listCommandeCoursView = (ListView) findViewById(R.id.listViewCommandeCours);
@@ -183,6 +181,9 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                 i.putExtra("phone", commande.getPhone());
                 i.putExtra("adresseLivraison", commande.getAdresseLivraison() );
                 i.putExtra("prix_total", commande.getPrixTotal());
+                i.putExtra("fullname",fullname);
+                i.putExtra("id_p",id_p);
+                i.putExtra("id_role",id_role);
                 startActivity(i);
             }
         });
@@ -196,6 +197,9 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                         .setAction("Action", null).show(); */
 
                 Intent newCommandeView = new Intent (getApplicationContext(), Addcommande.class);
+                newCommandeView.putExtra("fullname",fullname);
+                newCommandeView.putExtra("id_p",id_p);
+                newCommandeView.putExtra("id_role",id_role);
                 startActivity(newCommandeView);
             }
         });
