@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -33,12 +35,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static projet.olivraison.R.id.fab;
+import static projet.olivraison.R.id.fullname;
 
 public class detailCommandeLivreur extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RequestQueue requestQueue;
     private String jsonResponse;
+    Integer id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,88 +51,73 @@ public class detailCommandeLivreur extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Récupération des extras
+        Bundle extras = getIntent().getExtras();
+        // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
+        final String fullname = extras.getString("fullname");
+        final String id_role = extras.getString("id_role");
+        final String id_p = extras.getString("id_p");
+        // Définition du menu
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        // Mise en place de l'icone livreur dans le menu
+        ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
+        image_role.setImageResource(R.drawable.ic_livreur);
+        // Mise en place du fullname dans le menu de gauche
+        TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
+        navUsername.setText(fullname);
+
+        // Titre de la commande
+        TextView titreCommande = (TextView)findViewById(R.id.titreCommande);
+
         TextView textCommandeLivreur = (TextView)findViewById(R.id.textCommandeLivreur);
         Intent intent = getIntent();
 
         String position = intent.getStringExtra("position");
 
-        long id = 0;
-        id = intent.getLongExtra("id", id);
+
+        id = intent.getIntExtra("id", id);
 
         //textCommandeLivreur.setText(position);
 
         Button monBouton = (Button) findViewById(R.id.button);
-        monBouton.setText("prendre la commande : "+ id);
+        TextView TextAdresse = (TextView) findViewById(R.id.TextAdresse);
+
+        monBouton.setText("prendre la commande n° : "+id);
 
         monBouton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 //Toast.makeText(getApplicationContext(), "bouton clicker", Toast.LENGTH_LONG).show();
+
                 Intent i = new Intent (getApplicationContext(), LivreurMaps.class);
+                i.putExtra("id", id);
                  startActivity(i);
             }
         });
 
+        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/"+id;
 
-
-
-
-
-
-/*
-        requestQueue = Volley.newRequestQueue(this);
-        String url = "https://jsonplaceholder.typicode.com/users/"+id;
-
-        final JsonArrayRequest jsonArray = new JsonArrayRequest
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            // Parsing json array response
-                            // loop through each json object
-                            jsonResponse = "";
-                            Log.i("test", response.toString());
-                                //JSONObject person = (JSONObject) response.getJSONObject(jsonResponse);
-
-
-                                //String name = person.getString("name");
-                                //String username = person.getString("username");
-                                //String adresse = person.getString("street");
-                               // Toast.makeText(getApplicationContext(), "ADRESSE "+ adresse, Toast.LENGTH_LONG).show();
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        //mTxtDisplay.setText("Response: " + response.toString());
+                        Log.i("test", response.toString());
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-                        Log.i("test", error.getMessage());
 
                     }
                 });
-        Volley.newRequestQueue(this).add(jsonArray);
-        */
+// Access the RequestQueue through your singleton class.
+        Volley.newRequestQueue(this).add(jsObjRequest);
 
-
-
-
-    /*
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-    */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -136,33 +125,31 @@ public class detailCommandeLivreur extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        finish();
     }
 
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        switch (item.getItemId()) {
+            case R.id.deconnexion:
+                getIntent().removeExtra("fullname");
+                getIntent().removeExtra("id_role");
+                getIntent().removeExtra("id_p");
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                //drawer.closeDrawer(GravityCompat.START);
+                return true;
+        }
     }
 
 

@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="single">
-
-        <item
-            android:id="@+id/nav_livraison_cours"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/Liste_commandes_cours" />
-
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/Liste_commandes" />
+    <item android:title="Commandes">
+        <menu>
+            <item
+                android:id="@+id/nav_livraison_cours"
+                android:icon="@drawable/ic_shopping_cart_black_24dp"
+                android:title="@string/Liste_commandes_cours" />
+        </menu>
     </item>
 
     <item android:title="Paramètres">
@@ -22,7 +18,9 @@
                 android:title="@string/Set_Setting" />
             <item
                 android:id="@+id/deconnexion"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
                 android:title="Déconnexion" />
+
         </menu>
     </item>
 

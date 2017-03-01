@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
@@ -124,9 +125,11 @@ public class LoginActivity extends AppCompatActivity {
                                 String login = person.getString("login");
                                 String password = person.getString("password");
                                 String id_role = person.getString("id_role");
-                                String id = person.getString("id");
+                                String id_p = person.getString("id");
+                                String first_name = person.getString("first_name");
+                                String last_name = person.getString("last_name");
 
-                                jsonResponse = login+":"+password+":"+id_role+":"+id;
+                                jsonResponse = login+":"+password+":"+id_role+":"+id_p+":"+first_name+":"+last_name;
                                 users.add(jsonResponse);
                                 Log.i("jsonresponse",jsonResponse);
 
@@ -275,12 +278,14 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("pieces1",pieces[1]);
                 Log.i("pieces2", pieces[2]);
                 Log.i("pieces3", pieces[3]);
+                Log.i("pieces4", pieces[4]);
+                Log.i("pieces5", pieces[5]);
                     if (pieces[0].equals(mEmail)) {
                         // Account exists, return true if the password matches.
                         // On récupère le statut de la personne pour plus tard
                         id_role = pieces[2];
                         // On récupère le prénom + nom de la personne pour plus tard
-                        fullname = pieces[0] + " " + pieces[1];
+                        fullname = pieces[4] + " " + pieces[5];
                         // ON récupère son id
                         id_p = pieces[3];
                         return pieces[1].equals(mPassword);
@@ -326,6 +331,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -335,9 +341,9 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+                        finishAndRemoveTask();
+                        return;
                     }
-
                 })
                 .setNegativeButton("Non", null)
                 .show();
