@@ -17,18 +17,36 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.SequenceInputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Addcommande extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Spinner spinnerCivilite;
     ArrayAdapter<CharSequence> adapter;
+
+
+    private EditText editTextNom;
+    private EditText editTextPrenom;
+    private EditText editTextAdresse;
+    private EditText editTextPhone;
+    private EditText editTextTotal;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +85,19 @@ public class Addcommande extends AppCompatActivity
             }
         });
 
+
+
+
+        editTextNom = (EditText) findViewById(R.id.editTextNom);
+        editTextPrenom = (EditText) findViewById(R.id.editTextPrenom);
+        editTextAdresse= (EditText) findViewById(R.id.editTextAdresse);
+        editTextPhone= (EditText) findViewById(R.id.editTextPhone);
+        editTextTotal= (EditText) findViewById(R.id.editTextTotal);
+
+
+
+
+
         spinnerCivilite = (Spinner) findViewById(R.id.spinnerCivilite);
         adapter = ArrayAdapter.createFromResource(this, R.array.civilite, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,6 +115,57 @@ public class Addcommande extends AppCompatActivity
 
             }
         });
+
+
+        final Button btAjouter_commande = (Button) findViewById(R.id.bouton_ajouter_commande);
+        btAjouter_commande.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+
+                String name = editTextNom.getText().toString().trim();
+                String prenom = editTextPrenom.getText().toString();
+                String adresse = editTextAdresse.getText().toString();
+                String phone = editTextPhone.getText().toString();
+                String total = editTextTotal.getText().toString();
+
+                String addcommandeurl = "http://www.antoine-lucas.fr/api_android/web/index.php/api/commande/create?livreur=5&nom="+name+"&prenom="+prenom+"&phone="+phone+"&adresse="+adresse+"&prix_total="+total;
+                addcommandeurl = addcommandeurl.replaceAll(" ", "%20");
+
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, addcommandeurl,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Toast.makeText(Addcommande.this,response,Toast.LENGTH_LONG).show();
+                                finish();
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(Addcommande.this,error.toString(),Toast.LENGTH_LONG).show();
+                            }
+                        }){
+                    @Override
+                    protected Map<String,String> getParams(){
+                        Map<String,String> params = new HashMap<String, String>();
+
+                        return params;
+                    }
+
+                };
+
+                RequestQueue requestQueue = Volley.newRequestQueue(Addcommande.this);
+                requestQueue.add(stringRequest);
+
+
+            }
+        });
+
+
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
