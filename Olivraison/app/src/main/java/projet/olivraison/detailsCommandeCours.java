@@ -173,18 +173,19 @@ public class detailsCommandeCours extends AppCompatActivity
 
 
 
-        final String CmdUpdateURL = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/"+idcommande+"?livreur=5&statut=0";
+        final String CmdUpdateURL = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/"+idcommande+"?livreur=6&statut=0";
         final Button btAssigner = (Button) findViewById(R.id.assigner);
         btAssigner.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
 
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, CmdUpdateURL,
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, CmdUpdateURL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 Toast.makeText(detailsCommandeCours.this,response,Toast.LENGTH_LONG).show();
+                                finish();
                             }
                         },
                         new Response.ErrorListener() {
