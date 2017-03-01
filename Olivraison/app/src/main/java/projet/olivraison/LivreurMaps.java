@@ -51,6 +51,9 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
     private String APIDIRECTIONURL1 = "https://maps.googleapis.com/maps/api/directions/json?origin=";
     private String APIDIRECTIONURL2 = "&destination=";
     private String APIDIRECTIONURL3 =  "&key=AIzaSyD5h5tczzGszSA26zOu-xhEgTVTEvcmC4o&mode=driving";
+    private String GEOCODEURL ="https://maps.googleapis.com/maps/api/geocode/json?address=";
+
+    //27%20avenue%20de%20l%27europe%2092700
 
     public double DepartLatitude = 48.951434;
     public double DepartLongitude = 2.386974;
@@ -59,6 +62,7 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
     Polyline line;
     List<Polyline> polylines = new ArrayList<Polyline>();
     Integer id = 0;
+    String adresse = "";
 
 
     @Override
@@ -71,16 +75,70 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id", id);
+        adresse = intent.getStringExtra("adresse");
+        Log.i("test", "adresse: " + adresse);
 
+
+        //------------ requete pour recuperer la position de la destination -----------------//
+        adresse = adresse.replaceAll("\\s+","");
+        String url = GEOCODEURL + adresse;
+
+        JsonObjectRequest jsObjRequests = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Log.i("test", "Response: " + response.toString());
+                        try {
+                        String jsonResultat = response.toString();
+
+                        JSONObject jsonObject = new JSONObject(jsonResultat);
+
+                         JSONArray results = jsonObject.getJSONArray("results");
+                            JSONObject result = results.getJSONObject(0);
+                            JSONObject geometrie = result.getJSONObject("geometry");
+                            JSONObject location = geometrie.getJSONObject("location");
+
+                            double lat = location.getDouble("lat");
+                            double lng = location.getDouble("lng");
+
+                            sydney = new LatLng(lat, lng);
+
+
+
+                        Log.i("test", "geometries: " + location);
+
+                    } catch (JSONException e) {
+                        Log.i("test", "geometries: fail");
+                        e.printStackTrace();
+                    }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+        Volley.newRequestQueue(getBaseContext()).add(jsObjRequests);
+
+
+
+        // fin requete
+
+
+
+        // ----------------------------- bouton onclick --------------------------------------//
         Button monBouton = (Button) findViewById(R.id.terminer);
 
         monBouton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-    /*
+
                 String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/1?statut=2";
 
-                JsonObjectRequest jsObjRequests = new JsonObjectRequest
+                JsonObjectRequest jsObjRequestgeocode = new JsonObjectRequest
                         (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                             @Override
@@ -88,50 +146,40 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
                                // Log.i("test", "Response: " + response.toString());
                                 //Intent i = new Intent (getBaseContext(), indexLivreur.class);
                                 //startActivity(i);
+                                try
+                                {
+                                    String jsonResultat = response.toString();
+                                    JSONObject jsonObject = new JSONObject(jsonResultat);
+
+                                    JSONArray geometries = jsonObject.getJSONArray("geometrie");
+                                    Log.i("test", "geometries: dddddddddddddddddddddddddddddddddddddddddddddddd" + geometries);
+                                    Log.i("test", "geometries: " + geometries);
+
+
+
+                                } catch (JSONException e) {
+                                    Log.i("test", "geometries: fail");
+                                    e.printStackTrace();
+                                }
                             }
                         }, new Response.ErrorListener() {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                Log.i("test", "geometries: " + error);
                                 // TODO Auto-generated method stub
 
                             }
                         });
-                Volley.newRequestQueue(getBaseContext()).add(jsObjRequests);
-                */
-
-
-                Intent i = new Intent (getApplicationContext(), LivreurMaps.class);
-                startActivity(i);
+                Volley.newRequestQueue(getBaseContext()).add(jsObjRequestgeocode);
             }
-
-
-
         });
+        // fin bouton click -------------------------------------------------------------
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .build();
-
-        /*
-        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        double MaLongitude = location.getLongitude();
-        double MaLatitude = location.getLatitude();
-        MetreAJourItineraire();
-        */
-
-       // mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-
-/*
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (mLastLocation != null) {
-            Log.i("lat", String.valueOf(mLastLocation.getLatitude()));
-            Log.i("long", String.valueOf(mLastLocation.getLongitude()));
-        }
-
-*/
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

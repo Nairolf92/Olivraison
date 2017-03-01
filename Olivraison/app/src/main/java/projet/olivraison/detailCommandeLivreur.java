@@ -43,6 +43,7 @@ public class detailCommandeLivreur extends AppCompatActivity
 
     private RequestQueue requestQueue;
     private String jsonResponse;
+    public String adresse;
     Integer id = 0;
 
     @Override
@@ -99,6 +100,7 @@ public class detailCommandeLivreur extends AppCompatActivity
                 //Toast.makeText(getApplicationContext(), "bouton clicker", Toast.LENGTH_LONG).show();
 
                 Intent i = new Intent (getApplicationContext(), LivreurMaps.class);
+                i.putExtra("adresse", adresse);
                 i.putExtra("id", id);
                  startActivity(i);
             }
@@ -118,7 +120,7 @@ public class detailCommandeLivreur extends AppCompatActivity
                             String jsonResultat = response.toString();
                             JSONObject jsonObject = new JSONObject(jsonResultat);
 
-                            String adresse = response.getString("adresse");
+                            adresse = response.getString("adresse");
                             String nom = response.getString("nom");
                             String ref = response.getString("reference");
                             String prenom = response.getString("prenom");
