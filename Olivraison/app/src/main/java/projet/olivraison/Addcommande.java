@@ -138,6 +138,12 @@ public class Addcommande extends AppCompatActivity
                                 Toast.makeText(Addcommande.this,response,Toast.LENGTH_LONG).show();
                                 finish();
 
+                                Intent i = new Intent (getApplicationContext(), Index.class);
+                                i.putExtra("fullname",fullname);
+                                i.putExtra("id_p",id_p);
+                                i.putExtra("id_role",id_role);
+                                startActivity(i);
+
                             }
                         },
                         new Response.ErrorListener() {
