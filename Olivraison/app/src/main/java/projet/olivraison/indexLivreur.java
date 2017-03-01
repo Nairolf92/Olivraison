@@ -93,8 +93,8 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
-                                String name = person.getString("nom");
-                                String username = person.getString("adresse");
+                                String reference = person.getString("reference");
+                                String adresse = person.getString("adresse");
                                 id = person.getInt("id");
 
 
@@ -103,10 +103,9 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
                                 //ArrayId[i] = id;
 
 
-                                jsonResponse = username + ": +" + name;
                                 Log.i("test", jsonResponse);
 
-                                jsonResponse = " commande : " + id + " -- "+username;
+                                jsonResponse = reference+" : "+adresse;
                                 //Log.i("test" , jsonResponse);
                                 ArrayCommande.add(jsonResponse);
 
