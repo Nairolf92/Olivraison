@@ -100,6 +100,7 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
+                                String id = person.getString("id");
                                 String reference = person.getString("reference");
                                 String nom = person.getString("nom");
                                 String prenom = person.getString("prenom");
@@ -110,6 +111,7 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
 
                                 Commande commande = new Commande();
 
+                                commande.setId(id);
                                 commande.setReference(reference);
                                 commande.setNom(nom);
                                 commande.setPrenom(prenom);
@@ -175,6 +177,7 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                   selectedCommande = commandeCours.get(position);*/
 
                 Intent i = new Intent (getApplicationContext(), detailsCommandeCours.class);
+                i.putExtra("id", commande.getId() );
                 i.putExtra("reference", commande.getReference() );
                 i.putExtra("nom", commande.getNom());
                 i.putExtra("prenom", commande.getPrenom());

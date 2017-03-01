@@ -135,9 +135,11 @@
         android:text="Assigner "
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button3"
+
+
         android:background="#AA0114"
         android:textColor="#FFF"
+        android:id="@+id/assigner"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -148,7 +150,7 @@
         android:id="@+id/spinnerLivreur"
 
         android:scrollbarSize="14dp"
-        android:layout_above="@+id/button3"
+        android:layout_above="@+id/assigner"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="20dp" />

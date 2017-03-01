@@ -15,16 +15,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+
 import android.widget.ImageView;
+
+import android.widget.Button;
+
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -32,7 +38,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+
+//http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/idcmd?livreur=id_livreur&statut=0
 
 public class detailsCommandeCours extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,6 +53,7 @@ public class detailsCommandeCours extends AppCompatActivity
     private String jsonResponse;
 
     private ArrayList<Livreur> livreurs = new ArrayList<Livreur>();
+
 
 
     @Override
@@ -135,6 +146,8 @@ public class detailsCommandeCours extends AppCompatActivity
 
         //recuperation et affichage des details d'une commande
 
+        String idcommande = this.getIntent().getExtras().getString("id");
+
         String codecommandecours = this.getIntent().getExtras().getString("reference");
         TextView codecommandeView = (TextView)findViewById(R.id.codeCommandeCours);
         codecommandeView.setText(codecommandecours);
@@ -155,6 +168,50 @@ public class detailsCommandeCours extends AppCompatActivity
         String totalCmd = this.getIntent().getExtras().getString("prix_total");
         TextView totalCmdView = (TextView)findViewById(R.id.totalCmd);
         totalCmdView.setText(totalCmd);
+
+
+
+
+
+        final String CmdUpdateURL = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/"+idcommande+"?livreur=5&statut=0";
+        final Button btAssigner = (Button) findViewById(R.id.assigner);
+        btAssigner.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, CmdUpdateURL,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Toast.makeText(detailsCommandeCours.this,response,Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(detailsCommandeCours.this,error.toString(),Toast.LENGTH_LONG).show();
+                            }
+                        }){
+                    @Override
+                    protected Map<String,String> getParams(){
+                        Map<String,String> params = new HashMap<String, String>();
+
+                        return params;
+                    }
+
+                };
+
+                RequestQueue requestQueue = Volley.newRequestQueue(detailsCommandeCours.this);
+                requestQueue.add(stringRequest);
+
+
+            }
+        });
+
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -11,12 +11,23 @@ public class Commande {
 
     }
 
+    String id;
     String reference;
     String nom;
     String prenom;
     String phone;
     String adresseLivraison;
     String prix_total;
+
+
+    public String getId() {
+
+        return id;
+    }
+    public void setId(String id) {
+
+        this.id = id;
+    }
 
 
     public String getReference() {
