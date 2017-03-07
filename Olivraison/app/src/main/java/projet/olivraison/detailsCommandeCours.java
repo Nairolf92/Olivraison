@@ -231,10 +231,19 @@ public class detailsCommandeCours extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.nav_livraison_cours:
+                Intent i = new Intent(getApplicationContext(), Index.class);
+                Bundle extras = getIntent().getExtras();
+                String fullname = extras.getString("fullname");
+                String id_role = extras.getString("id_role");
+                String id_p = extras.getString("id_p");
+                i.putExtra("id_role",id_role);
+                i.putExtra("fullname",fullname);
+                i.putExtra("id_p",id_p);
+                startActivity(i);
+                finish();
+                return true;
             case R.id.deconnexion:
-                getIntent().removeExtra("fullname");
-                getIntent().removeExtra("id_role");
-                getIntent().removeExtra("id_p");
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

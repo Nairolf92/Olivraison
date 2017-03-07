@@ -191,9 +191,6 @@ public class Addcommande extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.deconnexion:
-                getIntent().removeExtra("fullname");
-                getIntent().removeExtra("id_role");
-                getIntent().removeExtra("id_p");
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
