@@ -167,7 +167,7 @@ public class detailsCommandeCours extends AppCompatActivity
 
         String totalCmd = this.getIntent().getExtras().getString("prix_total");
         TextView totalCmdView = (TextView)findViewById(R.id.totalCmd);
-        totalCmdView.setText(totalCmd);
+        totalCmdView.setText(totalCmd+" €");
 
 
 

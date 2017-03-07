@@ -41,15 +41,10 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
 
     private RequestQueue requestQueue;
     private String jsonResponse;
-    private ArrayList<String> ArrayCommande = new ArrayList<String>();
+    private ListView listCommandesLivreurs;
+    private ArrayList<Commande> commandeLivreur = new ArrayList<Commande>();
     public int ArrayId[] = new int[9999];
-    private TextView mLoginView;
-    private TextView mTestView;
-    private EditText mPasswordView;
     public int id;
-
-    // creation de liste des commande en cours
-    ListView listCommandesLivreurs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,30 +88,33 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
+                                String id = person.getString("id");
                                 String reference = person.getString("reference");
-                                String adresse = person.getString("adresse");
-                                id = person.getInt("id");
+                                String nom = person.getString("nom");
+                                String prenom = person.getString("prenom");
+                                String phone = person.getString("phone");
+                                String adresseLivraison = person.getString("adresse");
+                                String prix_total = person.getString("prix_total");
 
 
-                                ArrayId[i] = id;
-                                //Toast.makeText(getApplicationContext(), "id " + ArrayId[i], Toast.LENGTH_LONG).show();
-                                //ArrayId[i] = id;
+                                Commande commande = new Commande();
+
+                                commande.setId(id);
+                                commande.setReference(reference);
+                                commande.setNom(nom);
+                                commande.setPrenom(prenom);
+                                commande.setPhone(phone);
+                                commande.setAdresseLivraison(adresseLivraison);
+                                commande.setPrixTotal(prix_total);
 
 
-                                Log.i("test", jsonResponse);
-
-                                jsonResponse = reference+" : "+adresse;
-                                //Log.i("test" , jsonResponse);
-                                ArrayCommande.add(jsonResponse);
+                                commandeLivreur.add(commande);
 
                             }
 
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(indexLivreur.this,
-                                    android.R.layout.simple_list_item_1, ArrayCommande);
-
+                            ArrayAdapter<Commande> adapter = new CommandeCoursAdapter(indexLivreur.this, R.layout.activity_detail_commande_livreur, commandeLivreur);
                             listCommandesLivreurs.setAdapter(adapter);
-                            //mTestView.setText(Arrays.toString(ArrayCommande.toArray()));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -134,35 +132,25 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
         Volley.newRequestQueue(this).add(jsonArray);
 
 
+        //l'action qui se passe lorsque je clique sur un element de la liste des commande
         listCommandesLivreurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Commande commande = commandeLivreur.get(position);
 
-                Intent i = new Intent(getApplicationContext(), detailCommandeLivreur.class);
-                ArrayList<String> ArrayCommande = indexLivreur.this.ArrayCommande;
-
-                i.putExtra("position", ArrayCommande.get(position));
-                //i.putExtra("name",ArrayCommande.set(2,name) );
-
-
-                //Log.i("test", ArrayCommande.get(position) );
-                String idLocal =  ArrayCommande.get(position);
-                //i.putExtra("position", ArrayId[] );
-
-
-               //Toast.makeText(getApplicationContext(), "id " + ArrayId[position], Toast.LENGTH_LONG).show();
-                i.putExtra("id", ArrayId[position]);
-
-               // Toast.makeText(getApplicationContext(), "id " + id + ArrayCommande.get(position), Toast.LENGTH_LONG).show();
-                //i.putExtra("id", id);
-
-
+                Intent i = new Intent (getApplicationContext(), detailCommandeLivreur.class);
+                i.putExtra("id", commande.getId() );
+                i.putExtra("reference", commande.getReference() );
+                i.putExtra("nom", commande.getNom());
+                i.putExtra("prenom", commande.getPrenom());
+                i.putExtra("phone", commande.getPhone());
+                i.putExtra("adresseLivraison", commande.getAdresseLivraison() );
+                i.putExtra("prix_total", commande.getPrixTotal());
                 i.putExtra("fullname",fullname);
                 i.putExtra("id_p",id_p);
                 i.putExtra("id_role",id_role);
-
                 startActivity(i);
-
             }
         });
 

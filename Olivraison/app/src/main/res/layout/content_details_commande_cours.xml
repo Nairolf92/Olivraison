@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:text="Ref Comande:"
+        android:text="Référence commande:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -28,7 +28,6 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textSize="18sp"
-        android:text="Ref comd"
         android:layout_width="match_parent"
         android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
@@ -37,7 +36,7 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:text="Adresse Livraison:"
+        android:text="Adresse livraison:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/codeCommandeCours"
@@ -52,7 +51,6 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textSize="18sp"
-        android:text="adresse Livraison"
         android:layout_width="match_parent"
         android:layout_below="@+id/textView6"
         android:layout_alignParentLeft="true"
@@ -62,7 +60,7 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:text="Nom et prenom client:"
+        android:text="Nom et prénom client:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/adresseLivraison"
@@ -86,7 +84,7 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:text="Contact client:"
+        android:text="Téléphone :"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nomClient"

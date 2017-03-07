@@ -70,9 +70,6 @@ public class detailCommandeLivreur extends AppCompatActivity
         navUsername.setText(fullname);
 
         // Titre de la commande
-        final TextView titreCommande = (TextView)findViewById(R.id.titreCommande);
-
-        TextView textCommandeLivreur = (TextView)findViewById(R.id.textCommandeLivreur);
         Intent intent = getIntent();
 
         String position = intent.getStringExtra("position");
@@ -80,76 +77,43 @@ public class detailCommandeLivreur extends AppCompatActivity
 
         id = intent.getIntExtra("id", id);
 
-        //textCommandeLivreur.setText(position);
+        //recuperation et affichage des details d'une commande
 
-        Button monBouton = (Button) findViewById(R.id.button);
-       // TextView TextAdresse = (TextView) findViewById(R.id.TextAdresse);
-        final TextView LabelRue = (TextView) findViewById(R.id.LabelRue);
-        final TextView textNom = (TextView) findViewById(R.id.TextNom);
-        final TextView textPrenom = (TextView) findViewById(R.id.TextPrenom);
-        final TextView textTelephone = (TextView) findViewById(R.id.TextTelephone);
-        final TextView Textprix = (TextView) findViewById(R.id.TextPrix);
+        String idcommande = this.getIntent().getExtras().getString("id");
 
+        String codecommandecours = this.getIntent().getExtras().getString("reference");
+        TextView codecommandeView = (TextView)findViewById(R.id.referenceCommande);
+        codecommandeView.setText(codecommandecours);
 
-        monBouton.setText("prendre la commande");
+        String nom = this.getIntent().getExtras().getString("nom");
+        String prenom = this.getIntent().getExtras().getString("prenom");
+        TextView nomclientView = (TextView)findViewById(R.id.fullnameCommande);
+        nomclientView.setText(nom +" " +prenom );
 
-        monBouton.setOnClickListener(new View.OnClickListener(){
+        final String adresseLivraison = this.getIntent().getExtras().getString("adresseLivraison");
+        TextView adresseLivraisonView = (TextView)findViewById(R.id.adresseCommande);
+        adresseLivraisonView.setText(adresseLivraison);
+
+        String phoneClient = this.getIntent().getExtras().getString("phone");
+        TextView phoneClientView = (TextView)findViewById(R.id.telephoneCommande);
+        phoneClientView.setText(phoneClient);
+
+        String totalCmd = this.getIntent().getExtras().getString("prix_total");
+        TextView totalCmdView = (TextView)findViewById(R.id.prixCommande);
+        totalCmdView.setText(totalCmd+" €");
+
+        Button boutonPrendreCommande = (Button) findViewById(R.id.boutonPrendreCommande);
+        boutonPrendreCommande.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 //Toast.makeText(getApplicationContext(), "bouton clicker", Toast.LENGTH_LONG).show();
 
                 Intent i = new Intent (getApplicationContext(), LivreurMaps.class);
-                i.putExtra("adresse", adresse);
+                i.putExtra("adresse", adresseLivraison);
                 i.putExtra("id", id);
-                 startActivity(i);
+                startActivity(i);
             }
         });
-
-        String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/"+id;
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //mTxtDisplay.setText("Response: " + response.toString());
-                        Log.i("test", response.toString());
-
-                        try {
-                            String jsonResultat = response.toString();
-                            JSONObject jsonObject = new JSONObject(jsonResultat);
-
-                            adresse = response.getString("adresse");
-                            String nom = response.getString("nom");
-                            String ref = response.getString("reference");
-                            String prenom = response.getString("prenom");
-                            String telephone = response.getString("phone");
-                            String Prix = response.getString("prix_total");
-
-                            LabelRue.setText(adresse.toString());
-                            textNom.setText(nom.toString());
-                            titreCommande.setText("Réference: "+ref);
-                            textPrenom.setText(prenom.toString());
-                            textTelephone.setText(telephone.toString());
-                            Textprix.setText(Prix+ "€");
-
-
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-
-                    }
-                });
-// Access the RequestQueue through your singleton class.
-        Volley.newRequestQueue(this).add(jsObjRequest);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

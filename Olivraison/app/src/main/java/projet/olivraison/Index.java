@@ -52,8 +52,6 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
     private Menu menu;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,29 +150,6 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
               Commande commande = commandeCours.get(position);
-
-                /*Toast.makeText(getApplicationContext(),
-                        "Item name " + commandeCours.get(position).getNom(), Toast.LENGTH_LONG)
-                        .show();*/
-
-
-                // ListView Clicked item index
-                //int itemPosition     = position;
-
-                // ListView Clicked item value
-                // String  selectedCommande    = (String) listCommandeCoursView.getItemAtPosition(position);
-
-                // Show Alert
-                //Toast.makeText(getApplicationContext(),
-                //        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                //        .show();
-
-
-
-
-                //quand je clique sur un element, j'affiche la vue details pour afficher les details de la commande
-                /*Commande commandeCours = Index.this.commandeCours;
-                  selectedCommande = commandeCours.get(position);*/
 
                 Intent i = new Intent (getApplicationContext(), detailsCommandeCours.class);
                 i.putExtra("id", commande.getId() );
