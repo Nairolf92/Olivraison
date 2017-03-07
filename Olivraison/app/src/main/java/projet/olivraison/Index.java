@@ -196,12 +196,6 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         Toast.makeText(getApplicationContext(),
                 "Veuillez vous déconnecter si vous souhaitez revenir à la page précédente ",Toast.LENGTH_SHORT)
                 .show();
-     /*   DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }*/
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -211,11 +205,26 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
+            case R.id.nav_livraison_cours:
+                DrawerLayout mDrawerLayout;
+                mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                mDrawerLayout.closeDrawers();
+                return true;
+            case R.id.nav_ajout_commande:
+                Intent i = new Intent (getApplicationContext(), Addcommande.class);
+                Bundle extras = getIntent().getExtras();
+                String fullname = extras.getString("fullname");
+                String id_role = extras.getString("id_role");
+                String id_p = extras.getString("id_p");
+                i.putExtra("fullname",fullname);
+                i.putExtra("id_p",id_p);
+                i.putExtra("id_role",id_role);
+                startActivity(i);
+                return true;
             case R.id.deconnexion:
-                getIntent().removeExtra("fullname");
-                getIntent().removeExtra("id_role");
-                getIntent().removeExtra("id_p");
-                finish();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             default:
                 //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

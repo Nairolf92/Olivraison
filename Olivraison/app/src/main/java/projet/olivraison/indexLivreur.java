@@ -172,10 +172,9 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
                 mDrawerLayout.closeDrawers();
                 return true;
             case R.id.deconnexion:
-                getIntent().removeExtra("fullname");
-                getIntent().removeExtra("id_role");
-                getIntent().removeExtra("id_p");
-                finish();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             default:
                 //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

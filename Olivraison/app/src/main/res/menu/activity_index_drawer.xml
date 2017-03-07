@@ -12,10 +12,10 @@
 
     <item android:title="Paramètres">
         <menu>
-            <item
+            <!--<item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="@string/Set_Setting" />
+                android:title="@string/Set_Setting" />-->
             <item
                 android:id="@+id/deconnexion"
                 android:icon="@drawable/ic_power_settings_new_black_24dp"

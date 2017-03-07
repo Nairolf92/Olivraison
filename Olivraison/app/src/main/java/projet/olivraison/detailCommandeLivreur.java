@@ -8,41 +8,19 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import static projet.olivraison.R.id.fab;
 
 public class detailCommandeLivreur extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private RequestQueue requestQueue;
-    private String jsonResponse;
-    public String adresse;
     Integer id = 0;
 
     @Override
@@ -147,9 +125,6 @@ public class detailCommandeLivreur extends AppCompatActivity
                 finish();
                 return true;
             case R.id.deconnexion:
-                getIntent().removeExtra("fullname");
-                getIntent().removeExtra("id_role");
-                getIntent().removeExtra("id_p");
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
