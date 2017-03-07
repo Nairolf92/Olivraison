@@ -178,6 +178,11 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
+            case R.id.nav_livraison_cours:
+                DrawerLayout mDrawerLayout;
+                mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                mDrawerLayout.closeDrawers();
+                return true;
             case R.id.deconnexion:
                 getIntent().removeExtra("fullname");
                 getIntent().removeExtra("id_role");
@@ -195,12 +200,6 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
         Toast.makeText(getApplicationContext(),
                 "Veuillez vous déconnecter si vous souhaitez revenir à la page précédente ",Toast.LENGTH_SHORT)
                 .show();
-     /*   DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }*/
     }
 
 }

@@ -36,7 +36,6 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import static projet.olivraison.R.id.fab;
-import static projet.olivraison.R.id.fullname;
 
 public class detailCommandeLivreur extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -169,7 +168,20 @@ public class detailCommandeLivreur extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
+            case R.id.nav_livraison_cours:
+                Intent i = new Intent(getApplicationContext(), indexLivreur.class);
+                Bundle extras = getIntent().getExtras();
+                String fullname = extras.getString("fullname");
+                String id_role = extras.getString("id_role");
+                String id_p = extras.getString("id_p");
+                i.putExtra("id_role",id_role);
+                i.putExtra("fullname",fullname);
+                i.putExtra("id_p",id_p);
+                startActivity(i);
+                finish();
+                return true;
             case R.id.deconnexion:
                 getIntent().removeExtra("fullname");
                 getIntent().removeExtra("id_role");
