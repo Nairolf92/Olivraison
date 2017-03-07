@@ -13,7 +13,11 @@
         android:layout_gravity="center|bottom"
         android:text="Terminer la commande"
         android:padding="10dp"
-        android:layout_marginBottom="30dp"
+        android:width="400dp"
+        android:height="50dp"
+        android:textSize="16dp"
+        android:background="#AA0114"
+        android:textColor="#FFFFFF"
         android:id="@+id/terminer"
         android:paddingRight="10dp"/>
 
