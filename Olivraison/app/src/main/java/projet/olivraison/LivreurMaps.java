@@ -79,49 +79,6 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
         Log.i("test", "adresse: " + adresse);
 
 
-        //------------ requete pour recuperer la position de la destination -----------------//
-        adresse = adresse.replaceAll("\\s+","");
-        String url = GEOCODEURL + adresse;
-
-        JsonObjectRequest jsObjRequests = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Log.i("test", "Response: " + response.toString());
-                        try {
-                        String jsonResultat = response.toString();
-
-                        JSONObject jsonObject = new JSONObject(jsonResultat);
-
-                         JSONArray results = jsonObject.getJSONArray("results");
-                            JSONObject result = results.getJSONObject(0);
-                            JSONObject geometrie = result.getJSONObject("geometry");
-                            JSONObject location = geometrie.getJSONObject("location");
-
-                            double lat = location.getDouble("lat");
-                            double lng = location.getDouble("lng");
-
-                            sydney = new LatLng(lat, lng);
-
-
-
-                        Log.i("test", "geometries: " + location);
-
-                    } catch (JSONException e) {
-                        Log.i("test", "geometries: fail");
-                        e.printStackTrace();
-                    }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-
-                    }
-                });
-        Volley.newRequestQueue(getBaseContext()).add(jsObjRequests);
 
 
 
@@ -184,6 +141,8 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME, LOCATION_REFRESH_DISTANCE, mLocationListener);
+
+
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -213,15 +172,67 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         } else {
-            // Show rationale and request permission.
+
         }
             /*
             mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(48, 2))
                     .title("Hello world"));
             */
-            mMap.addMarker(new MarkerOptions().position(sydney).title("destination"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
+            //mMap.addMarker(new MarkerOptions().position(sydney).title("destination"));
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
+
+
+        //------------ requete pour recuperer la position de la destination -----------------//
+        adresse = adresse.replaceAll("\\s+","+");
+        adresse = adresse.replaceAll("'","");
+
+        String url = GEOCODEURL + adresse;
+        Log.i("test", "urllllllllllllllllllllllllll: " + url);
+
+        JsonObjectRequest jsObjRequests = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Log.i("test", "Response: " + response.toString());
+                        try {
+                            String jsonResultat = response.toString();
+
+                            JSONObject jsonObject = new JSONObject(jsonResultat);
+
+                            JSONArray results = jsonObject.getJSONArray("results");
+                            Log.i("test", "urllllllllllllllllllllllllll: " + jsonObject);
+                            JSONObject result = results.getJSONObject(0);
+                            JSONObject geometrie = result.getJSONObject("geometry");
+                            JSONObject location = geometrie.getJSONObject("location");
+
+                            double lat = location.getDouble("lat");
+                            double lng = location.getDouble("lng");
+
+                            sydney = new LatLng(lat, lng);
+                            mMap.addMarker(new MarkerOptions().position(sydney).title("destination"));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
+
+
+
+                            Log.i("test", "geometries: " + location);
+
+                        } catch (JSONException e) {
+                            Log.i("test", "geometries: fail");
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+        Volley.newRequestQueue(getBaseContext()).add(jsObjRequests);
+
     }
 
 
