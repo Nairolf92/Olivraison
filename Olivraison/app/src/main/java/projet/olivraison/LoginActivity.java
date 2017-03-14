@@ -46,14 +46,6 @@ import java.util.Arrays;
 public class LoginActivity extends AppCompatActivity {
 
     /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "admin:admin", "livreur:livreur"
-    };
-   
-    /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
@@ -70,8 +62,6 @@ public class LoginActivity extends AppCompatActivity {
     private String jsonResponse;
     private ArrayList<String> users = new ArrayList<String>();
     private String fullname;
-    private static final String PREFS_NAME = "";
-    // 1 = admin et 0 = livreur
     private String id_role;
     private String id_p;
 
