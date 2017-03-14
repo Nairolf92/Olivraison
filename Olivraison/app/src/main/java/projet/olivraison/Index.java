@@ -44,6 +44,7 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
 
     // creation de liste des commande en cours
     private ListView listCommandeCoursView;
+    private TextView no_commandes;
     private RequestQueue requestQueue;
     private String jsonResponse;
 
@@ -80,6 +81,9 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
         //recuperation de la vue qui affiche les donnees de l'API
         listCommandeCoursView = (ListView) findViewById(R.id.listViewCommandeCours);
         final String name = null;
+
+        // Message pas de commandes trouvées
+        no_commandes = (TextView) findViewById(R.id.no_commandes_admin);
 
         //initialisation de la requette
         requestQueue = Volley.newRequestQueue(this);
@@ -123,11 +127,13 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
 
                             }
 
-
-
-                            ArrayAdapter<Commande> adapter = new CommandeCoursAdapter(Index.this, R.layout.activity_index, commandeCours);
-                            listCommandeCoursView.setAdapter(adapter);
-
+                            if(commandeCours.isEmpty())
+                            {
+                                no_commandes.setVisibility(View.VISIBLE);
+                            }else {
+                                ArrayAdapter<Commande> adapter = new CommandeCoursAdapter(Index.this, R.layout.activity_index, commandeCours);
+                                listCommandeCoursView.setAdapter(adapter);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();

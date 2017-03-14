@@ -8,12 +8,16 @@
     tools:context="projet.olivraison.LivreurMaps" >
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:text="Terminer la commande"
         android:padding="10dp"
-        android:layout_marginBottom="30dp"
+        android:height="40dp"
+        android:textSize="14dp"
+        android:onClick="ButtonEnd"
+        android:background="#AA0114"
+        android:textColor="#FFFFFF"
         android:id="@+id/terminer"
         android:paddingRight="10dp"
         />

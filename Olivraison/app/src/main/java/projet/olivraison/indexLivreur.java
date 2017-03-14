@@ -40,6 +40,7 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
 
 
     private RequestQueue requestQueue;
+    private TextView no_commandes;
     private String jsonResponse;
     private ListView listCommandesLivreurs;
     private ArrayList<Commande> commandeLivreur = new ArrayList<Commande>();
@@ -74,6 +75,9 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
         requestQueue = Volley.newRequestQueue(this);
         String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commandes/livreur/"+id_p;
         listCommandesLivreurs = (ListView) findViewById(R.id.listViewCommandesLivreurs);
+
+        // Message pas de commandes trouvées
+        no_commandes = (TextView) findViewById(R.id.no_commandes_admin);
 
         JsonArrayRequest jsonArray = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -113,9 +117,13 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
 
                             }
 
-
-                            ArrayAdapter<Commande> adapter = new CommandeCoursAdapter(indexLivreur.this, R.layout.activity_detail_commande_livreur, commandeLivreur);
-                            listCommandesLivreurs.setAdapter(adapter);
+                            if(commandeLivreur.isEmpty())
+                            {
+                                no_commandes.setVisibility(View.VISIBLE);
+                            }else {
+                                ArrayAdapter<Commande> adapter = new CommandeCoursAdapter(indexLivreur.this, R.layout.activity_detail_commande_livreur, commandeLivreur);
+                                listCommandesLivreurs.setAdapter(adapter);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
