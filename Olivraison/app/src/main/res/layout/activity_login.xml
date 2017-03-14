@@ -11,11 +11,6 @@
     tools:context="projet.olivraison.LoginActivity">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/logo"/>
-
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
@@ -23,13 +18,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+
         android:visibility="gone" />
 
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:paddingTop="20dp"
-        android:layout_height="300dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -37,14 +32,42 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/logo"/>
+
+            <TextView
+                android:id="@+id/text_connection_problem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:layout_marginTop="50dp"
+                android:text="Un problème lié à votre connexion internet a été détecté"
+                android:visibility="gone"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/try_connection"
+                android:layout_gravity="center"
+                android:text="Réesayer la connexion"
+                android:layout_marginTop="30dp"
+                android:background="#AA0114"
+                android:textSize="18dp"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"/>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:paddingTop="30dp"
                 android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/login"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="match_parent"
                     android:hint="@string/prompt_login"
                     android:inputType="text"
                     android:maxLines="1"
@@ -60,7 +83,7 @@
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="match_parent"
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/password"
                     android:imeActionLabel="@string/action_sign_in_short"
@@ -75,7 +98,7 @@
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="24dp"
                 android:text="@string/action_sign_in_short"
                 android:textStyle="bold"

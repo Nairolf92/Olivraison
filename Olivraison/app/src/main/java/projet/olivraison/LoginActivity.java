@@ -35,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +60,9 @@ public class LoginActivity extends AppCompatActivity {
 
     // UI references.
     private TextView mLoginView;
-    private TextView mTestView;
+    private TextView mTextConnexionProblem;
+    private Button mConnexion;
+    private Button mRetryConnexion;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -71,17 +74,21 @@ public class LoginActivity extends AppCompatActivity {
     // 1 = admin et 0 = livreur
     private String id_role;
     private String id_p;
-    
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
-        // Set up the login form.
-        mLoginView = (TextView) findViewById(R.id.login);
 
+        // Set up the login form.
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
+        mLoginView = (TextView) findViewById(R.id.login);
+        mConnexion = (Button) findViewById(R.id.email_sign_in_button);
+        mTextConnexionProblem = (TextView) findViewById(R.id.text_connection_problem);
+        mRetryConnexion = (Button) findViewById(R.id.try_connection);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -94,19 +101,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Test de la connexion internet
+        attemptConnection();
+
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                attemptConnection();
                 attemptLogin();
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-
-
-        //mTestView = (TextView) findViewById(R.id.test);
         requestQueue = Volley.newRequestQueue(this);
         String url = "http://antoine-lucas.fr/api_android/web/index.php/api/users";
         JsonArrayRequest jsonArray = new JsonArrayRequest
@@ -152,6 +159,28 @@ public class LoginActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonArray);
     }
 
+    private void attemptConnection()
+    {
+        if (Network.isNetworkAvailable(LoginActivity.this))
+        {
+            Log.i("internet","internet OK");
+        }else{
+            Log.i("internet","internet PAS OK");
+            Toast.makeText(getApplicationContext(), "Un problème lié à votre connexion internet a été détecté", Toast.LENGTH_LONG).show();
+            mLoginView.setVisibility(View.GONE);
+            mPasswordView.setVisibility(View.GONE);
+            mConnexion.setVisibility(View.GONE);
+            mRetryConnexion.setVisibility(View.VISIBLE );
+            mTextConnexionProblem.setVisibility(View.VISIBLE);
+            mRetryConnexion.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent (getApplicationContext(), LoginActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
+    }
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
