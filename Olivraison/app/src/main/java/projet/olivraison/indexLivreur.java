@@ -88,6 +88,7 @@ public class indexLivreur extends AppCompatActivity implements NavigationView.On
                                 JSONObject person = (JSONObject) response
                                         .get(i);
 
+                                Log.i("reponse : " , "rep "+ person);
                                 String id = person.getString("id");
                                 String reference = person.getString("reference");
                                 String nom = person.getString("nom");

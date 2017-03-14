@@ -21,7 +21,7 @@ import com.android.volley.RequestQueue;
 public class detailCommandeLivreur extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Integer id = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +32,13 @@ public class detailCommandeLivreur extends AppCompatActivity
 
         // Récupération des extras
         Bundle extras = getIntent().getExtras();
+
         // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
         final String fullname = extras.getString("fullname");
         final String id_role = extras.getString("id_role");
         final String id_p = extras.getString("id_p");
+        final String id_commande_ = extras.getString("id");
+
         // Définition du menu
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -50,10 +53,11 @@ public class detailCommandeLivreur extends AppCompatActivity
         // Titre de la commande
         Intent intent = getIntent();
 
+
         String position = intent.getStringExtra("position");
 
 
-        id = intent.getIntExtra("id", id);
+
 
         //recuperation et affichage des details d'une commande
 
@@ -88,7 +92,10 @@ public class detailCommandeLivreur extends AppCompatActivity
 
                 Intent i = new Intent (getApplicationContext(), LivreurMaps.class);
                 i.putExtra("adresse", adresseLivraison);
-                i.putExtra("id", id);
+                i.putExtra("id", id_commande_);
+                i.putExtra("fullname",fullname);
+                i.putExtra("id_p",id_p);
+                i.putExtra("id_role",id_role);
                 startActivity(i);
             }
         });

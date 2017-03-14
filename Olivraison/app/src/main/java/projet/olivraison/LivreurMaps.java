@@ -1,5 +1,6 @@
 package projet.olivraison;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -53,7 +55,6 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
     private String APIDIRECTIONURL3 =  "&key=AIzaSyD5h5tczzGszSA26zOu-xhEgTVTEvcmC4o&mode=driving";
     private String GEOCODEURL ="https://maps.googleapis.com/maps/api/geocode/json?address=";
 
-    //27%20avenue%20de%20l%27europe%2092700
 
     public double DepartLatitude = 48.951434;
     public double DepartLongitude = 2.386974;
@@ -65,6 +66,7 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
     String adresse = "";
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +76,19 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
         int LOCATION_REFRESH_DISTANCE = 1;
 
         Intent intent = getIntent();
-        id = intent.getIntExtra("id", id);
-        adresse = intent.getStringExtra("adresse");
+
+
+
+
+        Bundle extras = getIntent().getExtras();
+        final String adresse = extras.getString("adresse");
+        final String id_commande_ = extras.getString("id");
+        final String fullname = extras.getString("fullname");
+        final String id_role = extras.getString("id_role");
+        final String id_p = extras.getString("id_p");
+
         Log.i("test", "adresse: " + adresse);
+
 
 
 
@@ -91,9 +103,9 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
 
         monBouton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(final View views) {
 
-                String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/1?statut=2";
+                String url = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/"+id_commande_+"?statut=2";
 
                 JsonObjectRequest jsObjRequestgeocode = new JsonObjectRequest
                         (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -106,11 +118,16 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
                                 try
                                 {
                                     String jsonResultat = response.toString();
+                                    Log.i("resultat", "res : " + jsonResultat);
                                     JSONObject jsonObject = new JSONObject(jsonResultat);
 
-                                    JSONArray geometries = jsonObject.getJSONArray("geometrie");
-                                    Log.i("test", "geometries: dddddddddddddddddddddddddddddddddddddddddddddddd" + geometries);
-                                    Log.i("test", "geometries: " + geometries);
+
+                                    Intent i = new Intent (getApplicationContext() , indexLivreur.class);
+                                    i.putExtra("id_role",id_role);
+                                    i.putExtra("fullname",fullname);
+                                    i.putExtra("id_p",id_p);
+                                    startActivity(i);
+
 
 
 
@@ -129,6 +146,9 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
                             }
                         });
                 Volley.newRequestQueue(getBaseContext()).add(jsObjRequestgeocode);
+
+               // Intent i = new Intent (getBaseContext(), detailCommandeLivreur.class);
+                //startActivity(i);
             }
         });
         // fin bouton click -------------------------------------------------------------
