@@ -91,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
         // Test de la connexion internet
         attemptConnection();
 
