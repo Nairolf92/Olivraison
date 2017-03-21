@@ -187,9 +187,32 @@ public class Addcommande extends AppCompatActivity
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        Bundle extras = getIntent().getExtras();
+        String fullname = extras.getString("fullname");
+        String id_role = extras.getString("id_role");
+        String id_p = extras.getString("id_p");
         switch (item.getItemId()) {
+            case R.id.nav_livraison_cours:
+                Intent h = new Intent (getApplicationContext(), Index.class);
+                h.putExtra("fullname",fullname);
+                h.putExtra("id_p",id_p);
+                h.putExtra("id_role",id_role);
+                startActivity(h);
+                return true;
+            case R.id.nav_ajout_commande:
+                DrawerLayout mDrawerLayout;
+                mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                mDrawerLayout.closeDrawers();
+                return true;
+            case R.id.nav_liste_commande:
+                Intent j = new Intent (getApplicationContext(), listeCommande.class);
+                j.putExtra("fullname",fullname);
+                j.putExtra("id_p",id_p);
+                j.putExtra("id_role",id_role);
+                startActivity(j);
+                return true;
             case R.id.deconnexion:
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
