@@ -13,7 +13,7 @@
                 android:icon="@drawable/ic_add_shopping_cart_black_24dp"
                 android:title="@string/Ajouter_commande" />
             <item
-                android:id="@+id/nav_slideshow"
+                android:id="@+id/nav_liste_commande"
                 android:icon="@drawable/ic_reorder_black_24dp"
                 android:title="@string/Liste_commandes" />
         </menu>
@@ -34,17 +34,10 @@
     </item>
 
     <item android:title="Paramètres">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/Set_Setting" />
             <item
                 android:id="@+id/deconnexion"
                 android:icon="@drawable/ic_power_settings_new_black_24dp"
                 android:title="Déconnexion" />
-
-        </menu>
     </item>
 
 </menu>

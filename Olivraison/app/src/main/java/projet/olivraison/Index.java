@@ -210,6 +210,10 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Bundle extras = getIntent().getExtras();
+        String fullname = extras.getString("fullname");
+        String id_role = extras.getString("id_role");
+        String id_p = extras.getString("id_p");
         switch (item.getItemId()) {
             case R.id.nav_livraison_cours:
                 DrawerLayout mDrawerLayout;
@@ -218,14 +222,17 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                 return true;
             case R.id.nav_ajout_commande:
                 Intent i = new Intent (getApplicationContext(), Addcommande.class);
-                Bundle extras = getIntent().getExtras();
-                String fullname = extras.getString("fullname");
-                String id_role = extras.getString("id_role");
-                String id_p = extras.getString("id_p");
                 i.putExtra("fullname",fullname);
                 i.putExtra("id_p",id_p);
                 i.putExtra("id_role",id_role);
                 startActivity(i);
+                return true;
+            case R.id.nav_liste_commande:
+                Intent j = new Intent (getApplicationContext(), listeCommande.class);
+                j.putExtra("fullname",fullname);
+                j.putExtra("id_p",id_p);
+                j.putExtra("id_role",id_role);
+                startActivity(j);
                 return true;
             case R.id.deconnexion:
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

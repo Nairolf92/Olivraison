@@ -86,6 +86,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="projet.olivraison.Index" />
         </activity>
+        <activity
+            android:name=".listeCommande"
+            android:label="Liste des commandes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".detailsListeCommande"
+            android:label="@string/title_activity_detail_commande_livreur"
+            android:parentActivityName=".listeCommande"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="projet.olivraison.listeCommande" />
+        </activity>
     </application>
 
 </manifest>
