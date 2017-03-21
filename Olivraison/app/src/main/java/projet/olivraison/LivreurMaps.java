@@ -81,7 +81,7 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
 
 
         Bundle extras = getIntent().getExtras();
-        final String adresse = extras.getString("adresse");
+        adresse = extras.getString("adresse");
         final String id_commande_ = extras.getString("id");
         final String fullname = extras.getString("fullname");
         final String id_role = extras.getString("id_role");
@@ -123,7 +123,7 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
 
 
                                     Intent i = new Intent (getApplicationContext() , indexLivreur.class);
-                                    i.putExtra("id_role",id_role);
+                                     i.putExtra("id_role",id_role);
                                     i.putExtra("fullname",fullname);
                                     i.putExtra("id_p",id_p);
                                     startActivity(i);
@@ -206,6 +206,8 @@ public class LivreurMaps extends FragmentActivity implements OnMapReadyCallback 
         //------------ requete pour recuperer la position de la destination -----------------//
         adresse = adresse.replaceAll("\\s+","+");
         adresse = adresse.replaceAll("'","");
+
+
 
         String url = GEOCODEURL + adresse;
         Log.i("test", "urllllllllllllllllllllllllll: " + url);
