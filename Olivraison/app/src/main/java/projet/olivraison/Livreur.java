@@ -13,7 +13,7 @@ public class Livreur {
     String id;
     String last_name;
     String first_name;
-
+    String mobile_phone;
 
 
     public String getId() {
@@ -44,5 +44,15 @@ public class Livreur {
 
         this.first_name = first_name;
     }
+
+    public String getMobile_phone() {
+
+        return mobile_phone;
+    }
+    public void setMobile_phone(String mobile_phone) {
+
+        this.mobile_phone = mobile_phone;
+    }
+
 
 }

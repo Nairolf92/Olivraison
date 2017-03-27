@@ -234,6 +234,13 @@ public class Index extends AppCompatActivity implements NavigationView.OnNavigat
                 j.putExtra("id_role",id_role);
                 startActivity(j);
                 return true;
+            case R.id.nav_liste_livreur:
+                Intent h = new Intent (getApplicationContext(), ListeLivreurs.class);
+                h.putExtra("fullname",fullname);
+                h.putExtra("id_p",id_p);
+                h.putExtra("id_role",id_role);
+                startActivity(h);
+                return true;
             case R.id.deconnexion:
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -98,6 +98,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="projet.olivraison.listeCommande" />
         </activity>
+        <activity
+            android:name=".ListeLivreurs"
+            android:label="@string/title_activity_liste_livreurs"
+            android:parentActivityName=".listeCommande"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="projet.olivraison.listeCommande" />
+        </activity>
     </application>
 
 </manifest>
