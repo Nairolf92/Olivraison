@@ -173,7 +173,7 @@ public class detailsCommandeCours extends AppCompatActivity
 
 
 
-        final String CmdUpdateURL = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/"+idcommande+"?livreur=6&statut=0";
+        final String CmdUpdateURL = "http://antoine-lucas.fr/api_android/web/index.php/api/commande/update/"+idcommande+"?livreur=1&statut=0";
         final Button btAssigner = (Button) findViewById(R.id.assigner);
         btAssigner.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
