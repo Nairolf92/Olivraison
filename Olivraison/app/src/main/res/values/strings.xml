@@ -48,5 +48,9 @@
         <item>Mlle</item>
     </string-array>
     <string name="title_activity_liste_livreurs">Liste des livreurs</string>
+
+
+    <string name="title_activity_addlivreur">Ajouter livreur</string>
+
 </resources>
 

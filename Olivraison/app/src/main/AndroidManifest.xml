@@ -107,6 +107,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="projet.olivraison.listeCommande" />
         </activity>
+        <activity
+            android:name=".Addlivreur"
+            android:label="@string/title_activity_addlivreur"
+            android:parentActivityName=".Addcommande"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="projet.olivraison.Addcommande" />
+        </activity>
     </application>
 
 </manifest>
