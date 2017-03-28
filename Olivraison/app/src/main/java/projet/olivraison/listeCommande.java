@@ -217,6 +217,13 @@ public class listeCommande extends AppCompatActivity implements NavigationView.O
                 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                 mDrawerLayout.closeDrawers();
                 return true;
+            case R.id.nav_liste_livreur:
+                Intent k = new Intent (getApplicationContext(), ListeLivreurs.class);
+                k.putExtra("fullname",fullname);
+                k.putExtra("id_p",id_p);
+                k.putExtra("id_role",id_role);
+                startActivity(k);
+                return true;
             case R.id.deconnexion:
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -47,6 +47,6 @@
         <item>Mme</item>
         <item>Mlle</item>
     </string-array>
-    <string name="title_activity_liste_livreurs">ListeLivreurs</string>
+    <string name="title_activity_liste_livreurs">Liste des livreurs</string>
 </resources>
 
