@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,6 +45,22 @@ public class Addlivreur extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Récupération des extras
+        Bundle extras = getIntent().getExtras();
+        // On récupère le nom+prénom de l'utilisateur qui s'est connecté ainsi que son statut (admin ou livreur) + l'id classique
+        final String fullname = extras.getString("fullname");
+        final String id_role = extras.getString("id_role");
+        final String id_p = extras.getString("id_p");
+        // Définition du menu
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        // Mise en place de l'icone livreur dans le menu
+        ImageView image_role = (ImageView) headerView.findViewById(R.id.icon_role);
+        image_role.setImageResource(R.drawable.ic_livreur);
+        // Mise en place du fullname dans le menu de gauche
+        TextView navUsername = (TextView) headerView.findViewById(R.id.fullname);
+        navUsername.setText(fullname);
 
 
         editTextNomLivreur= (EditText) findViewById(R.id.editTextNomLivreur);
@@ -76,6 +94,9 @@ public class Addlivreur extends AppCompatActivity
                                 finish();
 
                                 Intent i = new Intent (getApplicationContext(), ListeLivreurs.class);
+                                i.putExtra("fullname",fullname);
+                                i.putExtra("id_p",id_p);
+                                i.putExtra("id_role",id_role);
                                 startActivity(i);
 
                             }
@@ -108,65 +129,62 @@ public class Addlivreur extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.addlivreur, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+    public void onBackPressed() {finish();}
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        Bundle extras = getIntent().getExtras();
+        String fullname = extras.getString("fullname");
+        String id_role = extras.getString("id_role");
+        String id_p = extras.getString("id_p");
+        switch (item.getItemId()) {
+            case R.id.nav_livraison_cours:
+                Intent h = new Intent(getApplicationContext(), Index.class);
+                h.putExtra("fullname", fullname);
+                h.putExtra("id_p", id_p);
+                h.putExtra("id_role", id_role);
+                startActivity(h);
+                return true;
+            case R.id.nav_ajout_commande:
+                Intent i = new Intent (getApplicationContext(), Addcommande.class);
+                i.putExtra("fullname",fullname);
+                i.putExtra("id_p",id_p);
+                i.putExtra("id_role",id_role);
+                startActivity(i);
+                return true;
+            case R.id.nav_liste_commande:
+                Intent j = new Intent (getApplicationContext(), listeCommande.class);
+                j.putExtra("fullname",fullname);
+                j.putExtra("id_p",id_p);
+                j.putExtra("id_role",id_role);
+                startActivity(j);
+                return true;
+            case R.id.nav_liste_livreur:
+                Intent k = new Intent (getApplicationContext(), ListeLivreurs.class);
+                k.putExtra("fullname",fullname);
+                k.putExtra("id_p",id_p);
+                k.putExtra("id_role",id_role);
+                startActivity(k);
+                return true;
+            case R.id.nav_ajout_livreur:
+                DrawerLayout mDrawerLayout;
+                mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                mDrawerLayout.closeDrawers();
+                return true;
+            case R.id.deconnexion:
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                //drawer.closeDrawer(GravityCompat.START);
+                return true;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

@@ -220,6 +220,13 @@ public class Addcommande extends AppCompatActivity
                 k.putExtra("id_role",id_role);
                 startActivity(k);
                 return true;
+            case R.id.nav_ajout_livreur:
+                Intent l = new Intent (getApplicationContext(), Addlivreur.class);
+                l.putExtra("fullname",fullname);
+                l.putExtra("id_p",id_p);
+                l.putExtra("id_role",id_role);
+                startActivity(l);
+                return true;
             case R.id.deconnexion:
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
