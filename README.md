@@ -1,4 +1,5 @@
-O'LIVRAISON est une application Android créée dans le cadre de mon Bachelor DWM à l'ECE-Tech. Nous avons travailler à 4 sur ce projet.
+O'LIVRAISON est une application Android créée dans le cadre de mon Bachelor DWM à l'ECE-Tech, nous étions 4 à travailler sur ce projet.
+
 L'application est à destination des restaurants proposants un service de livraison. 
 L’application se divise en deux parties :
 Une partie “livreur” permettant de gérer les commandes attribuées au livreur
